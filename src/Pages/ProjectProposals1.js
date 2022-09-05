@@ -10,6 +10,7 @@ import {
   HELPER_CONTRACT,
   PROJECT_TOKEN,
   PROJECT_GOV,
+  BACKEND,
 } from "../contracts-config";
 
 import Box from "@mui/material/Box";
@@ -222,7 +223,7 @@ class ProjectProposals1 extends Component {
 
   componentDidMount() {
     try {
-      fetch("http://www.localhost:3001/project", {
+      fetch(`${BACKEND}/project`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

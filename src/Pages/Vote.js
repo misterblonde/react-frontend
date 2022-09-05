@@ -9,6 +9,7 @@ import {
   BOX_CONTRACT,
   GOV_CONTRACT,
   HELPER_CONTRACT,
+  BACKEND,
 } from "../contracts-config";
 
 import Box from "@mui/material/Box";
@@ -222,7 +223,7 @@ class Vote extends Component {
   }
   componentDidMount() {
     try {
-      fetch("http://www.localhost:3001/users", {
+      fetch(`${BACKEND}/users`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

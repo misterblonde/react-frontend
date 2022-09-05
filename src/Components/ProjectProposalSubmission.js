@@ -16,7 +16,7 @@ import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
 import { useInput } from "./input-hook";
 
-import { BOX_CONTRACT, PROJECT_GOV } from "../contracts-config";
+import { BOX_CONTRACT, PROJECT_GOV, BACKEND } from "../contracts-config";
 import { ethers } from "ethers";
 import projectGovContract from "../Contracts/ProjectGovernor.json";
 import boxContract from "../Contracts/Box.json";
@@ -243,7 +243,7 @@ export default function ProjectProposalSubmission(props) {
         // }
         try {
           axios
-            .post("http://localhost:3001/project", jsonEntry)
+            .post(`${BACKEND}/project`, jsonEntry)
             .then(() => console.log("New Entry Created"))
             .catch((err) => {
               console.error(err);
