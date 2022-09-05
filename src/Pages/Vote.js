@@ -231,6 +231,7 @@ class Vote extends Component {
       })
         .then((res) => res.json())
         .then((users) => {
+          console.log("Users inside promise", users);
           let event = this.setState({
             users: users,
             isLoaded: true,
@@ -239,6 +240,7 @@ class Vote extends Component {
         })
         .then((event) => {
           this.displayActiveProposals(event);
+          console.log("states after diplay proposals: ", this.state.states);
           this.interval = setInterval(
             () => this.setState({ time: Date.now() }),
             1000
