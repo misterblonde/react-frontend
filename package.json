@@ -54,7 +54,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://www.localhost:3001",
+  "proxy": "https://murmuring-fjord-38118.herokuapp.com:3001",
   "eslintConfig": {
     "extends": [
       "react-app",
