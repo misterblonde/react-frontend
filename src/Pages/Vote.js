@@ -234,11 +234,10 @@ class Vote extends Component {
           this.setState({ users: users, isLoaded: true, states: [] });
         })
         .then((event) => {
-          console.log("fetching proposal states");
-          await this.displayActiveProposals(event);
+          this.displayActiveProposals(event);
           this.interval = setInterval(
             () => this.setState({ time: Date.now() }),
-            10
+            1000
           );
           return;
         });
@@ -277,7 +276,7 @@ class Vote extends Component {
           provider
         );
         try {
-          console.log("Proposal ID: ", this.props.currentEntry);
+          console.log("Proposal ID:", this.props.currentEntry);
           const proposalAsUint = ethers.BigNumber.from(currentEntry);
           let propState = await smartContract.state(proposalAsUint);
           console.log("Proposal State is", propState, "item: ", currentEntry);
