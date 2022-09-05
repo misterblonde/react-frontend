@@ -231,7 +231,11 @@ class Vote extends Component {
       })
         .then((res) => res.json())
         .then((users) => {
-          this.setState({ users: users, isLoaded: true, states: [] });
+          let event = this.setState({
+            users: users,
+            isLoaded: true,
+            states: [],
+          });
         })
         .then((event) => {
           this.displayActiveProposals(event);
@@ -535,7 +539,9 @@ class Vote extends Component {
   render() {
     // const { user } = this.state;
     // const {users} = this.state.users;
-    console.log(this.state.states);
+    // if (!this.state.states) {this.displayActiveProposals(); }
+    console.log("this.state.states ", this.state.states);
+    console.log("this.state.users ", this.state.users);
     return (
       <div>
         <Box>
