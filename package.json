@@ -1,15 +1,52 @@
 {
-  "name": "react-amplify-app",
+  "name": "dao-investor",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
+    "@devexpress/dx-chart-core": "^3.0.4",
+    "@devexpress/dx-core": "^3.0.4",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@fontsource/roboto": "^4.5.7",
+    "@googlemaps/react-wrapper": "^1.1.35",
+    "@material-ui/core": "^4.12.4",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.9.2",
+    "@mui/styled-engine-sc": "^5.8.0",
+    "@mui/styles": "^5.10.2",
+    "@react-google-maps/api": "^2.12.1",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "a11y-react-emoji": "^1.2.0",
+    "abi-decoder": "^1.2.0",
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "bootstrap": "^5.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "ethereum-input-data-decoder": "^0.4.1",
+    "ethers": "^5.6.9",
+    "etherscan-api": "^10.2.0",
+    "framer-motion": "^7.2.0",
+    "google-maps-react": "^2.0.6",
+    "hardhat": "^2.10.1",
+    "node-rest-client-promise": "^3.1.1",
+    "notistack": "^2.0.5",
+    "os": "^0.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-error-overlay": "6.0.9",
+    "react-router-dom": "^6.3.0",
+    "react-script-tag": "^1.1.2",
+    "react-scripts": "4.0.3",
+    "react-vis": "^1.11.7",
+    "stream-browserify": "^3.0.0",
+    "styled-components": "^5.3.5",
+    "url": "^0.11.0",
+    "web-vitals": "^2.1.4",
+    "web3": "^1.7.5",
+    "web3-eth-abi": "^1.7.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -17,6 +54,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://www.localhost:3001",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -34,5 +72,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "react-error-overlay": "6.0.9"
+  },
+  "devDependencies": {
+    "buffer": "^6.0.3"
   }
 }

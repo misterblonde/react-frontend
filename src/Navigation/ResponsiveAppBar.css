@@ -1,0 +1,40 @@
+#profile-image {
+  height: auto;
+  width: 150px;
+  float: left;
+  padding-left: 2%;
+  margin: 0 auto;
+  padding: 10px 0;
+  color: blue;
+}
+
+h2 {
+  font-family: "Roboto";
+  font-style: bold;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
+/* img {
+  width: 150px;
+  height: auto;
+   "Haas Grot Text R",
+} */
+.navbarHeader {
+  font-size: 15px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  line-height: 1;
+  color: #141e27;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  background: #070a0e;
+  margin-bottom: -3.75rem;
+  padding: 1.2635rem 0 7.315rem;
+}
+
+.hero {
+  background: #070a0e;
+  margin-bottom: -3.75rem;
+  padding: 1.2635rem 0 7.315rem;
+}
