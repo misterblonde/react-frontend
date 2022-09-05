@@ -11,4 +11,4 @@ export const PROJECT_GOV = "0xd4433396177A38BbF1e9f1487BE964B09465E444";
 //"0x164421aDf4D4a5704b78302a318C951135A1189c";
 // export const PROJECT_TOKEN = "0x50Df1bE9b7a0F03cE5a7979ea59231E9833dCC7C";
 // export const PROJECT_GOV = "0xBd23Ed76976e495D108Cb139E720f61A62C20A2E";
-export const BACKEND = "https://murmuring-fjord-38118.herokuapp.com:3001";
+export const BACKEND = "https://murmuring-fjord-38118.herokuapp.com";
