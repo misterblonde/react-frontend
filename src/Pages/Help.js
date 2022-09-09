@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function HowTo() {
+export default function Help() {
   return (
     <div>
       <div>

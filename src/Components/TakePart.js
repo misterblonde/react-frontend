@@ -9,10 +9,12 @@ import SimpleSnackbar from "./SimpleSnackbar";
 
 const tokenAbi = contract.abi;
 
-export default function TakePart() {
+export default function TakePart({ callback }) {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [snackbar, setSnackbarAlert] = useState(false);
   const [rejection, setRejection] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [VPdelegated, setVPdelegated] = useState(false);
 
   async function checkWalletIsConnected() {
     const { ethereum } = window;
@@ -56,7 +58,7 @@ export default function TakePart() {
   const delegateHandler = async () => {
     try {
       const { ethereum } = window;
-
+      setIsDisabled(true);
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
@@ -84,6 +86,10 @@ export default function TakePart() {
         console.log(
           `Delegated NFT votes see transaction: https://rinkeby.etherscan.io/tx/${delegateTxn.hash}`
         );
+        setVPdelegated(true);
+        setSnackbarAlert(true);
+        setIsDisabled(false);
+        callback();
       } else {
         console.log("Ethereum object does not exist");
       }
@@ -92,6 +98,7 @@ export default function TakePart() {
         //user rejected the transaction
         setRejection(true);
         setSnackbarAlert(true);
+        setIsDisabled(false);
       }
       console.log(err);
     }
@@ -116,6 +123,7 @@ export default function TakePart() {
       <FormControl>
         <Button
           sx={{ mt: 1, mr: 1 }}
+          disabled={isDisabled}
           onClick={delegateHandler}
           type="delegate votes"
           variant="outlined"
@@ -144,6 +152,7 @@ export default function TakePart() {
     <div className="main-app">
       <div>{currentAccount ? delegateButton() : null}</div>
       {snackbar && rejection ? <SimpleSnackbar name="userDeniedTx" /> : null}
+      {snackbar && VPdelegated ? <SimpleSnackbar name="delegated" /> : null}
     </div>
   );
 }

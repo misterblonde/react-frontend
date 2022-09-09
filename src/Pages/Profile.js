@@ -12,11 +12,33 @@ import "./Profile.css";
 import droplet from "../img/droplet.png";
 import "../App.css";
 import "../index.css";
-import Divider from "@mui/material/Divider";
 import ProjectNftToken from "../Contracts/ProjectNftToken.json";
 import projectGovContract from "../Contracts/ProjectGovernor.json";
 import tap from "../img/tap.png";
 import runningTap from "../img/runningTap.png";
+
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+// import LocationOn from "@mui/material/LocationOn";
+import IconButton from "@mui/material/IconButton";
+import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Switch from "@mui/material/Switch";
+import Chip from "@mui/material/Chip";
+import { useNavigate } from "react-router-dom";
+import Card from "@mui/material/Card";
+import LocationOn from "@mui/icons-material/LocationOn";
+const style = {
+  width: "100%",
+  maxWidth: 360,
+  bgcolor: "background.paper",
+};
 
 export default function Profile() {
   const [currentAccount, setCurrentAccount] = useState(null);
@@ -33,6 +55,12 @@ export default function Profile() {
   const [baseUri, setBaseUri] = useState(null);
   const [nftDisplayal, displayNft] = useState(false);
   const [isLoyalOwner, setLoyalOwner] = useState(false);
+  const [showIds, setShowIds] = useState(false);
+  const [projectNft, setProjectNft] = useState(tap);
+  const [currentLoyalty, setLoyalty] = useState(
+    "You are currently not a loyal member."
+  );
+
   var api = require("etherscan-api").init(
     "QPTMSBIJA17A9XT2C9KH67YAGHRMWFEZFC",
     "rinkeby",
@@ -276,23 +304,44 @@ export default function Profile() {
   const imageHandler = () => {
     if (isLoyalOwner) {
       console.log("loyal owner detected");
+      setProjectNft(runningTap);
+      setLoyalty("This owner is a loyal Project DAO member.");
       return (
         <div>
           This owner is a <b>loyal</b> Project DAO member.
-          <img src={runningTap} alt="runningTap" width="106" />
+          {/* <img src={runningTap} alt="runningTap" width="106" /> */}
         </div>
       ); // gif
     }
     console.log("loyal owner detected");
+
+    if (!isLoyalOwner)
+      return (
+        <div text="coolTxt">
+          {/* You are currently not a loyal Project DAO member.  */}
+          Why don't you check out our{" "}
+          <Link to="/ProjectProposals1" className="Button">
+            current votes?
+          </Link>
+          {/* <img src={tap} alt="staticTap" width="106" /> */}
+        </div>
+      ); // default image
+  };
+
+  const showTokenIds = () => {
+    readNfts();
+    setShowIds(true);
+    if (!myIds) return <div>You don't seem to have any NFTs yet.</div>;
     return (
-      <div text="coolTxt">
-        Why don't you check out our{" "}
-        <Link to="/ProjectProposals1" className="btn btn-primary">
-          current votes?
-        </Link>
-        <img src={tap} alt="staticTap" width="106" />
-      </div>
-    ); // default image
+      <ul className="nobull">
+        {myIds.map((item, idx) => (
+          <li key={idx}>
+            <img src={droplet} alt={idx} key="genesisNft" width="26" />
+            <b>{item}</b>
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   useEffect(() => {
@@ -318,58 +367,111 @@ export default function Profile() {
   return (
     <div className="profileTxt">
       <br></br>
+      <h1>Your Infrastructure DAO NFT Portfolio</h1>
       <br></br>
-      <h1>Your Spring DAO NFT Portfolio</h1>
-      {/* <br></br> */}
+      <br></br>
+      <Typography fontWeight={900}>Account: {currentAccount} </Typography>
+      <br></br>
       <div>
         {/* <div>{currentAccount ? displayNfts() : readNfts()}</div> */}
-        <br></br>
-        <br></br>
-        <p className="code">Account: {currentAccount}</p>
-        <br></br>
-        <h3>DAO Governance Genesis NFTs</h3>
-        <div>
-          {/* <script src="https://unpkg.com/embeddable-nfts/dist/nft-card.min.js"></script> */}
-          {myIds && (
-            <div>
-              <img src={droplet} alt="nftgenesis" key="genesisNft" width="96" />
+        <Card>
+          <Divider sx={{ borderBottomWidth: 5 }} />
+          <Box sx={{ p: 4, display: "flex" }}>
+            <Divider sx={{ borderBottomWidth: 5 }} />
+            {/* <Avatar variant="rounded" src="../img/waterTap.jpg" /> */}
+            <img src={droplet} alt="placeholder" key="tapNft" width="210" />
+            <Stack spacing={0.5}>
+              <Typography align="left" fontWeight={800}>
+                Infrastructure DAO NFT Portfolio
+              </Typography>
+              <Typography fontWeight={500} align="left">
+                Enables Owner to take part in general DAO Governance
+              </Typography>
+              <Typography align="left" variant="body2" color="text.secondary">
+                <LocationOn sx={{ color: "#002884" }} /> Parent DAO level
+              </Typography>
+              <Typography align="left" variant="body1" color="text.secondary">
+                VP: {count} <br></br>
+                <Button
+                  visible="false"
+                  onClick={showTokenIds}
+                  variant="outlined"
+                >
+                  Show Token IDs
+                </Button>
+                {showIds && (
+                  <ul className="nobull">
+                    {myIds.map((item, idx) => (
+                      <li key={idx}>
+                        <img
+                          src={droplet}
+                          alt={idx}
+                          key="genesisNft"
+                          width="26"
+                        />
+                        <b>{item}</b>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </Typography>
+            </Stack>
+          </Box>
+          <Divider />
+          {/* <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ px: 2, py: 1, bgcolor: "background.default" }}
+          ></Stack> */}
+        </Card>
+        <Divider sx={{ borderBottomWidth: 5 }} />
+        <Card>
+          {projCount ? (
+            <Box sx={{ p: 4, display: "flex" }}>
+              {/* <Avatar variant="rounded" src="../img/waterTap.jpg" /> */}
+              <img
+                src={projectNft}
+                align="left"
+                alt="placeholder"
+                key="tapNft"
+                width="210"
+              />
+              <Stack spacing={0.5}>
+                <Typography align="left" fontWeight={800}>
+                  Project DAO NFT Portfolio
+                </Typography>
+                <Typography fontWeight={500} align="left">
+                  Enables Owner to take part in the project-level DAO Governance
+                </Typography>
+                <Typography align="left" variant="body2" color="text.secondary">
+                  <LocationOn sx={{ color: "#002884" }} /> Japineh, the Gambia
+                </Typography>
+                <Typography align="left" variant="body1" color="text.secondary">
+                  VP: {projCount}
+                </Typography>
+                <Typography align="left" variant="body2" color="text.secondary">
+                  {projCount ? imageHandler() : null}
+                </Typography>
+              </Stack>
+            </Box>
+          ) : (
+            <div className="coolTxt">
+              {" "}
+              <p>You are not a member of a Project DAO.</p>
             </div>
           )}
-          <p> Number of Genesis NFTs in your wallet:</p>{" "}
-          <h2 className="profileTxt">{count}</h2>{" "}
-          {/* if owns more than one - otherwise say you don't have any */}
-          <div></div>
-          <p>You own the following Token IDs</p>
-          <ul className="nobull">
-            {myIds.map((item, idx) => (
-              <li key={idx}>
-                <img src={droplet} alt={idx} key="genesisNft" width="26" />
-                <b>{item}</b>
-                {/* <nft-card
-                contractAddress={TOKEN_CONTRACT}
-                tokenId={item}
-                network="rinkeby"
-              ></nft-card>
-              <script src="https://unpkg.com/embeddable-nfts/dist/nft-card.min.js"></script> */}
-                {/* <img src={imgLink(item)} alt="nftimage" key={item} />
-              {console.log(imgLink(item))} */}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* <button onClick={readNfts} className="cta-button mint-nft-button">
-          Get the number of Genesis NFTs
-        </button> */}
-        {/* <br></br>
-        <br></br> */}
-        {/* <OpenSeaNfts /> */}
-        <Divider />
+          <Divider sx={{ borderBottomWidth: 5 }} />
+        </Card>
+        <Divider sx={{ borderBottomWidth: 5 }} />
         <br></br>
       </div>
-      {/* {displayTransactions == true && ( */}
-      <h3>Project NFT Portfolio</h3>
+    </div>
+  );
+}
 
+{
+  /* <h3>Project NFT Portfolio</h3>
       <div>
         <div></div>
         <p> Number of Project NFTs in your wallet:</p>
@@ -387,12 +489,5 @@ export default function Profile() {
         <br></br>
         <br></br>
       </div>
-    </div>
-  );
+    </div> */
 }
-
-/* <nft-card
-                    contractAddress={TOKEN_CONTRACT}
-                    tokenId={item}
-                    network="rinkeby"
-                  ></nft-card> */

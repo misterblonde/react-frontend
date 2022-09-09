@@ -39,7 +39,7 @@ const encodedFunctionCall =
 let proposals = [];
 var axios = require("axios");
 
-export default function ProposalSubmission(props) {
+export default function ProposalSubmission(props, { callback }) {
   const [proposalID, setProposalID] = useState(null);
   const [proposeHash, setProposeHash] = useState(null);
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -148,16 +148,9 @@ export default function ProposalSubmission(props) {
       //   let mybudgetplease = values.budgetAmount;
 
       // GPS location
-
       //   });
       let proposeTxn;
       try {
-        // proposeTxn = await proposeContract.propose(
-        //   [BOX_CONTRACT],
-        //   [0],
-        //   [encodedFunctionCall],
-        //   values.proposalQuestion
-        // );
         proposeTxn = await proposeContract.submitProposal(
           [BOX_CONTRACT],
           [0],
@@ -170,8 +163,7 @@ export default function ProposalSubmission(props) {
         const proposeReceipt = await proposeTxn.wait(1);
         setProposeHash(proposeTxn.hash);
         console.log("Proposal transaction: ", proposeTxn);
-        // let proposeHash = proposeTxn.hash;
-        // let blocknumber = proposeTxn.blocknumber;
+
         console.log("Propose receipt instantiated.");
         const proposalId = proposeReceipt.events[0].args.proposalId;
         console.log("PROPOSAL ID (HEX): ", proposalId); // returns hex num of
@@ -236,9 +228,11 @@ export default function ProposalSubmission(props) {
         console.log(
           `Proposal submitted, see transaction: https://rinkeby.etherscan.io/tx/${proposeTxn.hash}`
         );
+        props.callback();
       } catch (error) {
         setRpcError(error.message);
         console.log(error.reason);
+        props.callback();
         if (
           error.reason ==
           "execution reverted: Governor: proposer votes below proposal threshold"
@@ -262,13 +256,19 @@ export default function ProposalSubmission(props) {
     }
   };
 
+  const isEmpty = (data) => {
+    if (data.length == 0) {
+      return true;
+    }
+    return false;
+  };
+
   const isFormValid = () => {
     return (
-      values.firstName &&
-      values.lastName &&
-      values.email &&
-      values.budgetAmount &&
-      values.proposalQuestion
+      //   values.firstName &&
+      //   values.lastName &&
+      //   values.email &&
+      values.budgetAmount && values.proposalQuestion
     );
   };
 
@@ -305,12 +305,18 @@ export default function ProposalSubmission(props) {
         >
           <div>
             <TextField
+              //   error={values.proposalQuestion.length == 0}
               label="Infrastructure Proposal"
               id="outlined-start-adornment"
-              // defaultValue="Please summarise your infrastructure proposal as a yes-no question."
+              defaultValue="Please summarise your infrastructure proposal as a yes-no question."
               sx={{ m: 1, width: "75ch" }}
               value={values.proposalQuestion}
+              //   helperText={"This field is compulsory and cannot be left empty."}
               onChange={handleChange("proposalQuestion")}
+              //   inputRef={register({
+              //     required: "This is field required",
+              //     validate: (values.proposalQuestion) => isEmpty(values.proposalQuestion),
+              //   })}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start"></InputAdornment>
@@ -354,7 +360,10 @@ export default function ProposalSubmission(props) {
               <FormHelperText
                 sx={{ m: 1, width: "75ch" }}
                 id="outlined-weight-helper-text"
-                //   defaultValue="Estimated Budget Required"
+                defaultValue="Estimated Budget Required"
+                helperText={
+                  "This field is compulsory and cannot be left empty."
+                }
               >
                 {" "}
                 Estimated Budget Required
@@ -415,7 +424,8 @@ export default function ProposalSubmission(props) {
               sx={{ mt: 1, mr: 1 }}
               type="submit"
               onClick={printMessage}
-              disabled={!isFormValid}
+              //   disabled={!isFormValid}
+              error={!isFormValid}
               variant="contained"
               endIcon={<SendIcon />}
             >
@@ -436,14 +446,15 @@ export default function ProposalSubmission(props) {
         )}
         {!proposalID && buttonClicked && rpcError && (
           <div>
-            <br></br>
+            <SimpleSnackbar name="rpcError" errorType={rpcError} />
+            {/* <br></br>
             <h2>Something went wrong!</h2>
             <p>
               <br></br>
               <span role="img" aria-label="warning"></span>❌ Error sending
               transaction:<br></br>
               {rpcError}
-            </p>
+            </p> */}
           </div>
         )}
         {/* check to distinguish between not enough votes and proposal already exists? */}
@@ -464,19 +475,6 @@ export default function ProposalSubmission(props) {
               //   href={`https://rinkeby.etherscan.io/tx/${proposeHash}`}
               //   target="_blank"
             />
-            <h2>Thank you for your proposal submission!</h2>
-            <p>
-              ✅ Your vote has been successfully submitted. Your proposal ID is{" "}
-              <b>{proposalID}</b>. You can check your transaction details under:
-              <a
-                style={{ display: "table-cell" }}
-                href={`https://rinkeby.etherscan.io/tx/${proposeHash}`}
-                target="_blank"
-              >
-                https://rinkeby.etherscan.io/tx/{proposeHash}
-              </a>
-              {/* https://rinkeby.etherscan.io/tx/{voteHash} */}
-            </p>
           </div>
         )}
       </div>
@@ -486,4 +484,19 @@ export default function ProposalSubmission(props) {
       </Routes>
     </div>
   );
+}
+
+{
+  /* <h2>Thank you for your proposal submission!</h2>
+<p>
+  ✅ Your vote has been successfully submitted. Your proposal ID is{" "}
+  <b>{proposalID}</b>. You can check your transaction details under:
+  <a
+    style={{ display: "table-cell" }}
+    href={`https://rinkeby.etherscan.io/tx/${proposeHash}`}
+    target="_blank"
+  >
+    https://rinkeby.etherscan.io/tx/{proposeHash}
+  </a>
+  {/* https://rinkeby.etherscan.io/tx/{voteHash} </p> */
 }

@@ -8,6 +8,16 @@
   color: blue;
 }
 
+#miniprofile-image {
+  height: auto;
+  width: 60px;
+  float: left;
+  padding-left: 2%;
+  margin: 0 auto;
+  padding: 10px 0;
+  color: blue;
+}
+
 h2 {
   font-family: "Roboto";
   font-style: bold;

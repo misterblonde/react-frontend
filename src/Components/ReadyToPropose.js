@@ -9,6 +9,7 @@ import ProposalSubmission from "./ProposalSubmission";
 export default function Delegated() {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [proposalAppears, setProposalAppears] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const checkWalletIsConnected = async () => {
     const { ethereum } = window;
@@ -50,7 +51,17 @@ export default function Delegated() {
 
   const proposeHandler = async () => {
     try {
+      setIsDisabled(true);
       setProposalAppears(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const resetProposeHandler = async () => {
+    try {
+      setIsDisabled(false);
+      setProposalAppears(false);
     } catch (err) {
       console.log(err);
     }
@@ -74,6 +85,7 @@ export default function Delegated() {
       <FormControl>
         <Button
           sx={{ mt: 1, mr: 1 }}
+          disabled={isDisabled}
           onClick={proposeHandler}
           type="propose"
           variant="outlined"
@@ -95,7 +107,10 @@ export default function Delegated() {
         {currentAccount ? proposeButton() : null}
         {proposalAppears ? (
           <div className="centerMyForm">
-            <ProposalSubmission submittingParty={currentAccount} />
+            <ProposalSubmission
+              submittingParty={currentAccount}
+              callback={resetProposeHandler}
+            />
           </div>
         ) : null}
       </div>

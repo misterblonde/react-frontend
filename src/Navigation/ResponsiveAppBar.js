@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,8 +16,9 @@ import AdbIcon from "@mui/icons-material/Adb";
 import "./ResponsiveAppBar.css";
 import { Link } from "react-router-dom";
 import MetaMaskAuth from "../Components/MetaMaskAuth";
-import { useEffect } from "react";
-const pages = ["About", "Projects", "Proposals", "Upcoming"];
+
+import ape from "../img/aperound.png";
+const pages = ["About", "Projects", "Proposals", "Help"];
 const settings = ["Profile", "Vote", "Logout"]; // "Account",
 
 const navigation = [
@@ -35,7 +37,7 @@ const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "About", href: "About", current: false },
   { name: "Proposals", href: "Proposals", current: false },
-  { name: "Upcoming", href: "Upcoming", current: false },
+  { name: "Help", href: "Help", current: false },
   //   { name: "Future Proposals", href: "Upcoming", current: false },
 ];
 
@@ -43,7 +45,38 @@ const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [currentAccount, setCurrentAccount] = React.useState(null);
+  const [rerender, setRerender] = useState(false);
 
+  const userIsConnected = () => {
+    if (!currentAccount) {
+      return (
+        <Avatar
+          alt="Remy Sharp"
+          //   src="./profileAvatar.png"
+          //   img="./profileAvatar.png"
+        />
+      );
+    }
+    return (
+      <img
+        styles={{
+          maxWidth: 2,
+          maxHeight: 2,
+          borderRadius: 2,
+          overflow: "hidden",
+          borderWidth: 1,
+          //   borderColor: "red",
+        }}
+        // /styles={{ minWidth: 2, maxHeight: 2 }}
+        id="miniprofile-image"
+        // id="myape"
+        // className="hidden lg:block h-8 w-auto"
+        src={ape}
+        // width="5"
+        // alt="Workflow"
+      />
+    );
+  };
   const onAddressChanged = (callback) => {
     setCurrentAccount(callback);
   };
@@ -62,6 +95,54 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  //   const connectWalletHandler = async () => {
+  //     const { ethereum } = window;
+
+  //     if (!ethereum) {
+  //       alert("Please install Metamask!");
+  //     }
+
+  //     try {
+  //       const accounts = await ethereum.request({
+  //         method: "eth_requestAccounts",
+  //       });
+  //       console.log("Found an account! Address: ", accounts[0]);
+  //       setCurrentAccount(accounts[0]);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   const triggerUpdate = async () => {
+  //     if (!currentAccount) {
+  //       let connected = await { connect };
+  //     }
+  //     setRerender(!rerender);
+  //   };
+
+  //   const checkWalletIsConnected = async () => {
+  //     const { ethereum } = window;
+
+  //     if (!ethereum) {
+  //       console.log("Make sure you have Metamask installed!");
+  //       return;
+  //     } else {
+  //       console.log("Wallet exists! We're ready to go!");
+  //     }
+
+  //     const accounts = await ethereum.request({ method: "eth_accounts" });
+  //     if (accounts.length !== 0) {
+  //       const account = accounts[0];
+  //       console.log("Found an authorized account: ", account);
+  //       setCurrentAccount(account);
+  //     } else {
+  //       console.log("No authorized account found");
+  //     }
+  //   };
+
+  //   useEffect(() => {
+  //     checkWalletIsConnected();
+  //   }, [window.ethereum]);
 
   useEffect(() => {
     console.log("rerender");
@@ -206,11 +287,7 @@ const ResponsiveAppBar = () => {
             <MetaMaskAuth onAddressChanged={onAddressChanged} />
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt="Remy Sharp"
-                  //   src="./profileAvatar.png"
-                  //   img="./profileAvatar.png"
-                />
+                {userIsConnected()}
               </IconButton>
             </Tooltip>
             <Menu

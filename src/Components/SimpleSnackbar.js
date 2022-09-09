@@ -72,12 +72,16 @@ export default function SimpleSnackbar(
   };
 
   const findNotificationMessage = () => {
-    if (props.name == "minting") {
+    if (props.name == "noNfts") {
       setNotificationMsg("You don't have any NFTs yet.");
-    } else if (props.name == "isDelegate") {
+    } else if (props.name == "delegated") {
       setNotificationMsg(
         "Vote(s) successfully delegated, you can take part in the DAO now."
       );
+    } else if (props.name == "pleaseWait") {
+      setNotificationMsg("Please Wait.");
+    } else if (props.name == "rpcError") {
+      setNotificationMsg("Error sending transaction.");
     } else if (props.name == "voteCastSuccess") {
       setNotificationMsg("Success. Your vote has been cast.");
     } else if (props.name == "voteCastFailure") {

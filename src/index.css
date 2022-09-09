@@ -15,6 +15,15 @@ code {
     monospace;
 }
 
+.hacky {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: 40px;
+  font-weight: 700;
+  font-style: bold;
+  /* display: inline; */
+}
+
 .nobull {
   list-style-type: none;
 }
