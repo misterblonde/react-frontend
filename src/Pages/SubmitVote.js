@@ -20,7 +20,6 @@ import { useParams, useLocation } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Votes.css";
 import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
 
 const governanceContractAddress = GOV_CONTRACT;
 const governanceAbi = govContract.abi;
