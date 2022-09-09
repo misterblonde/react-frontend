@@ -69,12 +69,8 @@ export default function Results() {
   return (
     <div>
       <br></br>
-      <h1>Voting Results </h1>
+      <h3>Voting Results </h3>
       <br></br>
-      <h3>
-        <b>Proposal Question:</b> {proposalQuestion}
-      </h3>
-
       <Link to={`../Vote`} style={{ textDecoration: "none" }}>
         <Button
           sx={{ mt: 1, mr: 1 }}
@@ -82,9 +78,13 @@ export default function Results() {
           variant="outlined"
           className="hiddenlinkbutton"
         >
-          Go Back
+          Back
         </Button>
       </Link>
+      <br></br>
+      <h3>
+        <b>Proposal Question:</b> {proposalQuestion}
+      </h3>
       {votingResults.length == 3 && (
         <div>
           <p>Total Votes: {totalVotes}</p>

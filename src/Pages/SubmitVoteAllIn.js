@@ -17,6 +17,10 @@ import { useParams, useLocation } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Votes.css";
 import "./proposals.css";
+
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
 const governanceContractAddress = GOV_CONTRACT;
 const governanceAbi = govContract.abi;
 
@@ -206,6 +210,16 @@ export default function SubmitVoteAllIn() {
           >
             Submit Vote
           </Button>
+          <Link to={`../Vote`} style={{ textDecoration: "none" }}>
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="goBack"
+              variant="outlined"
+              className="hiddenlinkbutton"
+            >
+              Back
+            </Button>
+          </Link>
         </FormControl>
       </form>
       <div>
@@ -227,17 +241,6 @@ export default function SubmitVoteAllIn() {
                 resetSnackbarAlert={resetSnackbarAlert}
               />
             }
-            <h2>Thank you!</h2>
-            <p>
-              ✅ You can check out your voting transaction heree:
-              <a
-                style={{ display: "table-cell" }}
-                href={`https://rinkeby.etherscan.io/tx/${voteHash}`}
-                target="_blank"
-              >
-                https://rinkeby.etherscan.io/tx/{voteHash}
-              </a>
-            </p>
           </div>
         )}
       </div>

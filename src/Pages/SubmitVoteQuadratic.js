@@ -22,6 +22,10 @@ import Slider from "@mui/material/Slider";
 import "./Votes.css";
 import web3 from "../web3";
 import { bottomNavigationClasses } from "@mui/material";
+
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
 const governanceContractAddress = GOV_CONTRACT;
 const governanceAbi = govContract.abi;
 
@@ -300,6 +304,16 @@ export default function SubmitVoteQuadratic() {
           >
             Submit Vote
           </Button>
+          <Link to={`../Vote`} style={{ textDecoration: "none" }}>
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="goBack"
+              variant="outlined"
+              className="hiddenlinkbutton"
+            >
+              Back
+            </Button>
+          </Link>
         </FormControl>
       </form>
       <div>
@@ -321,19 +335,6 @@ export default function SubmitVoteQuadratic() {
                 resetSnackbarAlert={resetSnackbarAlert}
               />
             }
-            <h2>Thank you!</h2>
-            <p>
-              ✅ Your vote has been succesfully submitted. Track the status of
-              your transaction here:
-              <a
-                style={{ display: "table-cell" }}
-                href={`https://rinkeby.etherscan.io/tx/${voteHash}`}
-                target="_blank"
-              >
-                https://rinkeby.etherscan.io/tx/{voteHash}
-              </a>
-              {/* https://rinkeby.etherscan.io/tx/{voteHash} */}
-            </p>
           </div>
         )}
       </div>
@@ -358,13 +359,6 @@ export default function SubmitVoteQuadratic() {
             }
             <div>
               <h2>⚠️ Something Went Wrong!</h2>
-              <p>
-                ❌ Error. Your vote could not be cast.
-                {/* <a href={`https://rinkeby.etherscan.io/tx/${voteHash}`}>
-                  https://rinkeby.etherscan.io/tx/{voteHash}
-                </a> */}
-                {/* https://rinkeby.etherscan.io/tx/{voteHash} */}
-              </p>
             </div>
           </div>
         )}

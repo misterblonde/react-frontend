@@ -34,6 +34,10 @@ import Chip from "@mui/material/Chip";
 import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import LocationOn from "@mui/icons-material/LocationOn";
+
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
 const style = {
   width: "100%",
   maxWidth: 360,

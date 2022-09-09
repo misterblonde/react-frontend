@@ -524,33 +524,27 @@ class Vote extends Component {
     }
   };
 
-  copyToClipboard = (e) => {
-    this.textArea.select();
-    document.execCommand("copy");
-    // This is just personal preference.
-    // I prefer to not show the whole text area selected.
-    e.target.focus();
-    this.setState({ copySuccess: "Copied!" });
-  };
+  //   copyToClipboard = (e) => {
+  //     this.textArea.select();
+  //     document.execCommand("copy");
+  //     // This is just personal preference.
+  //     // I prefer to not show the whole text area selected.
+  //     e.target.focus();
+  //     this.setState({ copySuccess: "Copied!" });
+  //   };
 
-  //   smthChanging() {
-  //     this.setState({
-  //       user: Meteor.user(),
-  //     });
-  //   }
   refreshPage = () => {
     window.location.reload();
   };
 
   render() {
-    // const { user } = this.state;
-    // const {users} = this.state.users;
-    // if (!this.state.states) {this.displayActiveProposals(); }
     console.log("this.state.states ", this.state.states);
     console.log("this.state.users ", this.state.users);
     return (
       <div>
         <Box>
+          <br></br>
+          <br></br>
           <h1 className="proposalHeadline"> All Spring DAO Proposals </h1>
           <Divider />
           <Button onClick={this.refreshPage} variant="outlined">

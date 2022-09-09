@@ -20,6 +20,9 @@ import { useParams, useLocation } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Votes.css";
 
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
 function voteToInt(voteAsString) {
   if (voteAsString === "yes") {
     return 1;
@@ -218,6 +221,16 @@ export default function SubmitVoteSimple() {
           >
             Submit Vote
           </Button>
+          <Link to={`../Vote`} style={{ textDecoration: "none" }}>
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="goBack"
+              variant="outlined"
+              className="hiddenlinkbutton"
+            >
+              Back
+            </Button>
+          </Link>
         </FormControl>
       </form>
       <div>
@@ -239,19 +252,6 @@ export default function SubmitVoteSimple() {
                 resetSnackbarAlert={resetSnackbarAlert}
               />
             }
-            <h2>Thank you!</h2>
-            <p>
-              ✅ Your vote has been succesfully submitted. Track the status of
-              your transaction here:
-              <a
-                style={{ display: "table-cell" }}
-                href={`https://rinkeby.etherscan.io/tx/${voteHash}`}
-                target="_blank"
-              >
-                https://rinkeby.etherscan.io/tx/{voteHash}
-              </a>
-              {/* https://rinkeby.etherscan.io/tx/{voteHash} */}
-            </p>
           </div>
         )}
       </div>
@@ -274,16 +274,7 @@ export default function SubmitVoteSimple() {
                 resetSnackbarAlert={resetSnackbarAlert}
               />
             }
-            <div>
-              <h2>⚠️ Something Went Wrong!</h2>
-              <p>
-                ❌ Error. Your vote could not be cast.
-                {/* <a href={`https://rinkeby.etherscan.io/tx/${voteHash}`}>
-                  https://rinkeby.etherscan.io/tx/{voteHash}
-                </a> */}
-                {/* https://rinkeby.etherscan.io/tx/{voteHash} */}
-              </p>
-            </div>
+            <div></div>
           </div>
         )}
       </div>
