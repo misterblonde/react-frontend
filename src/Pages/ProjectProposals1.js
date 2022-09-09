@@ -231,12 +231,21 @@ class ProjectProposals1 extends Component {
       })
         .then((res) => res.json())
         .then((users) => {
-          this.setState({ users: users, isLoaded: true, states: [] });
-        })
-        .then((event) => {
-          this.displayActiveProposals(event);
-          return;
+          console.log("Users inside promise", users);
+          let event = this.setState(
+            {
+              users: users,
+              isLoaded: true,
+              states: [],
+            },
+            this.displayActiveProposals
+          );
+          //   this.setState({ users: users, isLoaded: true, states: [] });
         });
+      // .then((event) => {
+      //   this.displayActiveProposals(event);
+      //   return;
+      // });
       //   console.log("get governor balances");
       //   this.getGovernorBalance();
     } catch (err) {
