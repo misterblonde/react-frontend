@@ -20,6 +20,9 @@ import { useParams, useLocation } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Votes.css";
 
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
 function voteToInt(voteAsString) {
   if (voteAsString === "yes") {
     return 1;
@@ -219,6 +222,16 @@ export default function ProjectSimpleVote() {
           >
             Submit Vote
           </Button>
+          <Link to={`../ProjectProposals1`} style={{ textDecoration: "none" }}>
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="goBack"
+              variant="outlined"
+              className="hiddenlinkbutton"
+            >
+              Back
+            </Button>
+          </Link>
         </FormControl>
       </form>
       <div>

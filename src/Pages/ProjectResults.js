@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import MyBarChart from "../Components/MyBarChart";
 
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
 export default function ProjectResults() {
   const location = useLocation();
   const id = location.pathname;
@@ -57,7 +60,18 @@ export default function ProjectResults() {
   return (
     <div>
       <br></br>
-      <h1>Voting Results </h1>
+      <h3>Voting Results </h3>
+      <br></br>
+      <Link to={`../ProjectProposals1`} style={{ textDecoration: "none" }}>
+        <Button
+          sx={{ mt: 1, mr: 1 }}
+          type="goBack"
+          variant="outlined"
+          className="hiddenlinkbutton"
+        >
+          Back
+        </Button>
+      </Link>
       <br></br>
       <h3>
         <b>Proposal Question:</b> {proposalQuestion}

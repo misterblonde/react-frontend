@@ -23,6 +23,9 @@ import "./Votes.css";
 import web3 from "../web3";
 import { bottomNavigationClasses } from "@mui/material";
 
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
 function voteToInt(voteAsString) {
   if (voteAsString === "yes") {
     return 1;
@@ -294,6 +297,16 @@ export default function ProjectQuadraticVote() {
           >
             Submit Vote
           </Button>
+          <Link to={`../ProjectProposals1`} style={{ textDecoration: "none" }}>
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="goBack"
+              variant="outlined"
+              className="hiddenlinkbutton"
+            >
+              Back
+            </Button>
+          </Link>
         </FormControl>
       </form>
       <div>
