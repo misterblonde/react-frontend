@@ -231,16 +231,26 @@ class Vote extends Component {
       })
         .then((res) => res.json())
         .then((users) => {
-          this.setState({ users: users, isLoaded: true, states: [] });
-        })
-        .then((event) => {
-          this.displayActiveProposals(event);
-          this.interval = setInterval(
-            () => this.setState({ time: Date.now() }),
-            1000
+          console.log("Users inside promise", users);
+          let event = this.setState(
+            {
+              users: users,
+              isLoaded: true,
+              states: [],
+            },
+            this.displayActiveProposals
+            // (event) => this.displayActiveProposals(event)
           );
-          return;
         });
+      // .then((event) => {
+      //   this.displayActiveProposals(event);
+      //   console.log("states after diplay proposals: ", this.state.states);
+      //   this.interval = setInterval(
+      //     () => this.setState({ time: Date.now() }),
+      //     1000
+      //   );
+      //   return;
+      // });
       console.log("refreshing page");
       //   this.getGovernorBalance();
     } catch (err) {
@@ -276,7 +286,7 @@ class Vote extends Component {
           provider
         );
         try {
-          //   console.log(this.props.currentEntry);
+          console.log("Proposal ID:", this.props.currentEntry);
           const proposalAsUint = ethers.BigNumber.from(currentEntry);
           let propState = await smartContract.state(proposalAsUint);
           console.log("Proposal State is", propState, "item: ", currentEntry);
@@ -534,6 +544,10 @@ class Vote extends Component {
 
   render() {
     // const { user } = this.state;
+    // const {users} = this.state.users;
+    // if (!this.state.states) {this.displayActiveProposals(); }
+    console.log("this.state.states ", this.state.states);
+    console.log("this.state.users ", this.state.users);
     return (
       <div>
         <Box>
