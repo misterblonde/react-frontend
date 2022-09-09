@@ -22,6 +22,7 @@ import Paper from "@mui/material/Paper";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
+import web3 from "../web3";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     // size: 20,
@@ -287,7 +288,7 @@ function Home() {
         console.log(currentAccount);
         const returnAddr = await nftContract.delegates(currentAccount);
         console.log("is delegate?", returnAddr);
-        if (returnAddr != isAddress(null)) {
+        if (returnAddr !== "0x0000000000000000000000000000000000000000") {
           console.log("Account has delegated Votes.");
           console.log(returnAddr);
           setIsDelHolder(true);
@@ -358,7 +359,7 @@ function Home() {
             style={{ width: 600, height: 100, fontSize: "22px" }}
           >
             <StyledBadge color="secondary" sx={10}>
-              <ShoppingCartIcon sx={10} />
+              <ShoppingCartIcon />
             </StyledBadge>
             {"  "}
             {"    "}
@@ -392,6 +393,15 @@ function Home() {
     govNftRaised();
     // isDelegateHandler();
   }, []);
+
+  useEffect(() => {
+    // resetSnackbar();
+    readNfts();
+    isPersonDelegate();
+    triggerUpdate();
+    govNftRaised();
+    // isDelegateHandler();
+  }, [isDelegate, isGovHolder]);
 
   //   useEffect(() => {
   //     // resetSnackbar();

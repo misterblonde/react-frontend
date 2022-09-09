@@ -28,7 +28,7 @@ import ProjectSimpleVote from "./Pages/ProjectSimpleVote";
 import ProjectQuadraticVote from "./Pages/ProjectQuadraticVote";
 
 // import { useEffect } from "react";
-// import useMetaMask from "./Components/MetaMask";
+import useMetaMask from "./Components/MetaMask";
 // import { Button } from "react-bootstrap";
 
 // class AppClassComponent extends Component {

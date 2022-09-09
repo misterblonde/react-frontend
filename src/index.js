@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import Web3 from "web3";
 import { Web3ReactProvider } from "@web3-react/core";
-import { MetaMaskProvider } from "./Components/MetaMask";
+// import { MetaMaskProvider } from "./Components/MetaMask";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -27,13 +27,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 ></script>; */
 root.render(
   <React.StrictMode>
-    {/* <Web3ReactProvider getLibrary={getLibrary}>
-      <MetaMaskProvider> */}
+    {/* <Web3ReactProvider getLibrary={getLibrary}> */}
+    {/* <MetaMaskProvider>  */}
     <BrowserRouter>
       <App />
     </BrowserRouter>
-    {/* </MetaMaskProvider>
-    </Web3ReactProvider> */}
+    {/* </MetaMaskProvider> */}
+    {/* </Web3ReactProvider> */}
   </React.StrictMode>
 );
 //   document.getElementById("root")
