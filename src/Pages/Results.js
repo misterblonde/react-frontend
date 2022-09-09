@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import MyBarChart from "../Components/MyBarChart";
 
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
 export default function Results() {
   const location = useLocation();
   const id = location.pathname;
@@ -71,6 +74,17 @@ export default function Results() {
       <h3>
         <b>Proposal Question:</b> {proposalQuestion}
       </h3>
+
+      <Link to={`../Vote`} style={{ textDecoration: "none" }}>
+        <Button
+          sx={{ mt: 1, mr: 1 }}
+          type="goBack"
+          variant="outlined"
+          className="hiddenlinkbutton"
+        >
+          Go Back
+        </Button>
+      </Link>
       {votingResults.length == 3 && (
         <div>
           <p>Total Votes: {totalVotes}</p>

@@ -520,7 +520,10 @@ class ProjectProposals1 extends Component {
     if (this.state.users.length == 0)
       return (
         <div>
+          <br></br>
+          <br></br>
           <h1 className="proposalHeadline"> All Project-specific Proposals </h1>
+          <br></br>
           <Divider />
           There are no project-specific proposals.
         </div>
