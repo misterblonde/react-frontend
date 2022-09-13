@@ -617,7 +617,7 @@ class Vote extends Component {
                       )}
                     </ListItemIcon>
                     <ListItemText
-                      primary={item.proposalQuestion}
+                      primary={<b>ProposaL: </b>item.proposalQuestion}
                       sx={{ display: "inline" }}
                       component="span"
                       variant="body2"
@@ -630,7 +630,7 @@ class Vote extends Component {
                             variant="body2"
                             color="text.primary"
                           >
-                            {item.budget}
+                            <b>Budget: </b> {item.budget}
                             {/* <button
                             onClick={this.copyToClipboard}
                             // () => {
