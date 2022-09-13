@@ -342,7 +342,7 @@ export default function ProposalSubmission(props, { callback }) {
                 value={values.budgetAmount}
                 onChange={handleChange("budgetAmount")}
                 endAdornment={
-                  <InputAdornment position="end">Wei</InputAdornment>
+                  <InputAdornment position="end">GWei</InputAdornment>
                 }
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{

@@ -126,6 +126,34 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
     );
   }
   if (value > 2) {
+    if (value == 7) {
+      return (
+        <div>
+          <Link
+            to={`../Results/${proposalId}`}
+            state={{ proposalQuestion: proposalQuestion }}
+            style={{ textDecoration: "none" }}
+          >
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="results"
+              className="hiddenlinkbutton"
+              variant="outlined"
+            >
+              See Results
+            </Button>
+          </Link>
+          <Link
+            to={{
+              pathname: `https://rinkeby.etherscan.io/address/${this.state.newDAOs.idx}`,
+            }}
+            target="_blank"
+          >
+            💰{" "}
+          </Link>
+        </div>
+      );
+    }
     return (
       <div>
         <Link
@@ -235,6 +263,7 @@ class Vote extends Component {
       isExecuted: false,
       isClicked: false,
       snackbarCount: 0,
+      newDAOs: {},
     };
     this.displayActiveProposals = this.displayActiveProposals.bind(this);
   }
@@ -427,6 +456,20 @@ class Vote extends Component {
         // // store box address in backend
 
         console.log("New box deployed at: ", newboxAddress);
+
+        const newBar = { ...this.state.newDAOs, idx: newboxAddress };
+
+        // Create new "foo" object, cloning existing foo into new foo
+        // and updating bar key with new bar object
+        // const newFoo = { ...this.state.foo, newDAOs: newBar };
+
+        // Calling setState() correctly updates state and triggers
+        // re-render. Here we replace the existing foo with the newly
+        // created foo object
+        this.setState({ newDAOs: newBar });
+        //this.setState(prevState => ({expenses: [...prevState.expenses, newExpense]}))
+
+        // this.setState(newDAOs);
         notifyUser("execute", newboxAddress);
         // return Notify("execute", newboxAddress);
         console.log(`execute ${newboxAddress}`);
