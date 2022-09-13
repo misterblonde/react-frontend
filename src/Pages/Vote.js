@@ -124,28 +124,31 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
       </div>
     );
   }
-  return (
-    <div>
-      <Link
-        to={`../Results/${proposalId}`}
-        state={{ proposalQuestion: proposalQuestion }}
-        style={{ textDecoration: "none" }}
-        // to={{
-        //   pathname: `../SubmitVote/${proposalId}`,
-        //   state: { proposalQuestion: ${proposalQuestion} ,
-        // }}
-      >
-        <Button
-          sx={{ mt: 1, mr: 1 }}
-          type="results"
-          className="hiddenlinkbutton"
-          variant="outlined"
+  if (value > 2) {
+    return (
+      <div>
+        <Link
+          to={`../Results/${proposalId}`}
+          state={{ proposalQuestion: proposalQuestion }}
+          style={{ textDecoration: "none" }}
+          // to={{
+          //   pathname: `../SubmitVote/${proposalId}`,
+          //   state: { proposalQuestion: ${proposalQuestion} ,
+          // }}
         >
-          See Results
-        </Button>
-      </Link>
-    </div>
-  );
+          <Button
+            sx={{ mt: 1, mr: 1 }}
+            type="results"
+            className="hiddenlinkbutton"
+            variant="outlined"
+          >
+            See Results
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+  return <div></div>;
 }
 
 function showOutcome(status) {
@@ -205,6 +208,16 @@ function showOutcome(status) {
         Executed
       </div>
     );
+  }
+}
+
+function notifyUser(param) {
+  if (param == "queue") {
+    return <SimpleSnackbar name="queue" />;
+  }
+
+  if (param === "execute") {
+    return <SimpleSnackbar name="execute" />;
   }
 }
 
@@ -395,7 +408,7 @@ class Vote extends Component {
         );
         const Receipt = await exeTx.wait(1);
         console.log("Execution Receipt ", Receipt);
-
+        notifyUser("execute");
         // generate helper contract object
         // const helperContract = new ethers.Contract(
         //     HELPER_CONTRACT,
@@ -527,7 +540,7 @@ class Vote extends Component {
         );
         const Receipt = await queueTx.wait(1);
         console.log("Queueing Receipt ", Receipt);
-        this.setState({ isQueued: true, isClicked: true });
+        notifyUser("queue");
       } catch (error) {
         if (error.code === 4001) {
           // EIP-1193 userRejectedRequest error
@@ -611,7 +624,7 @@ class Vote extends Component {
                             variant="body2"
                             color="text.primary"
                           >
-                            {item.budgetAmount}
+                            {item.budget}
                             {/* <button
                             onClick={this.copyToClipboard}
                             // () => {
@@ -694,16 +707,11 @@ class Vote extends Component {
                 </ListItem>
               ))}
           </List>
-          {this.state.isClicked &&
-          this.state.isQueued &&
-          this.state.snackbarCount == 0 ? (
-            <SimpleSnackbar name="queue" />
-          ) : null}
-          {this.state.isClicked &&
+          {/* {this.state.isClicked &&
           this.state.isExecuted &&
           this.state.snackbarCount == 0 ? (
             <SimpleSnackbar name="execute" />
-          ) : null}
+          ) : null} */}
         </Box>
         <Routes>
           <Route path={`/About`} component={<About />} />
