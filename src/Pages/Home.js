@@ -48,6 +48,8 @@ function Home() {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [isGovHolder, setIsGovHolder] = useState(null);
   const [isDelegate, setIsDelHolder] = useState(null);
+  const [isQueued, setIsQueued] = useState(null);
+  const [isExecuted, setIsExecuted] = useState(null);
   const [amountRaised, setAmountRaised] = useState(null);
   const [snackbar, setSnackbarAlert] = useState(false);
   const [rejection, setRejection] = useState(false);

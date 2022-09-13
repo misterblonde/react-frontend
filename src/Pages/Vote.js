@@ -216,6 +216,7 @@ class Vote extends Component {
       selectedIndex: null,
       expand: false,
     };
+    this.displayActiveProposals = this.displayActiveProposals.bind(this);
   }
 
   componentWillUnmount() {
@@ -238,9 +239,9 @@ class Vote extends Component {
               isLoaded: true,
               states: [],
             },
-            this.displayActiveProposals
             // (event) => this.displayActiveProposals(event)
           );
+          setInterval(this.displayActiveProposals, 1000);
         });
       // .then((event) => {
       //   this.displayActiveProposals(event);
@@ -275,6 +276,8 @@ class Vote extends Component {
     }
   };
 
+
+
   async getProposalState(currentEntry) {
     try {
       const { ethereum } = window;
@@ -289,6 +292,14 @@ class Vote extends Component {
           console.log("Proposal ID:", this.props.currentEntry);
           const proposalAsUint = ethers.BigNumber.from(currentEntry);
           let propState = await smartContract.state(proposalAsUint);
+        
+        //   for (let i=0; i< this.state.users.length; i++){
+        //     if (this.props.currentEntry == this.state.users[idx].proposalId){
+        //         this.setState({ states[idx] : propState });
+        //         break;
+        //     }
+        //   }
+
           console.log("Proposal State is", propState, "item: ", currentEntry);
 
           return propState;
@@ -512,6 +523,7 @@ class Vote extends Component {
         );
         const Receipt = await queueTx.wait(1);
         console.log("Queueing Receipt ", Receipt);
+        console.log(this.state.states[idx] === )
       } catch (error) {
         if (error.code === 4001) {
           // EIP-1193 userRejectedRequest error
@@ -523,6 +535,20 @@ class Vote extends Component {
       console.log("Ethereum object does not exist");
     }
   };
+
+//   checkStates = () => {
+//     if(this.state.states[idx] === 5){}}
+
+this.state.states[idx] === 
+
+
+componentDidUpdate(prevProps, prevState) {
+    console.log('Prev state', prevState); // Before update
+    console.log('New state', this.state); // After update 
+  }
+
+  refreshState = (idx) => this.setState({ showHiddenPassword: !this.state.showHiddenPassword });
+
 
   //   copyToClipboard = (e) => {
   //     this.textArea.select();
@@ -538,6 +564,7 @@ class Vote extends Component {
   };
 
   render() {
+    const { showState} = this.state;
     console.log("this.state.states ", this.state.states);
     console.log("this.state.users ", this.state.users);
     return (
