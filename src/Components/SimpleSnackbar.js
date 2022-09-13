@@ -117,6 +117,10 @@ export default function SimpleSnackbar(
       setNotificationMsg("Minting. Please wait.");
     } else if (props.name == "activateVotes") {
       setNotificationMsg("Successfully delegated votes to user.");
+    } else if (props.name == "queue") {
+      setNotificationMsg("Proposal has been queued.");
+    } else if (props.name == "execute") {
+      setNotificationMsg("Proposal has been executed.");
     }
   };
 

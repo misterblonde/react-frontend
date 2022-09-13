@@ -215,6 +215,10 @@ class Vote extends Component {
       states: [],
       selectedIndex: null,
       expand: false,
+      isQueued: null,
+      isExecuted: null,
+      isClicked: false,
+      snackbarCount: 0,
     };
     this.displayActiveProposals = this.displayActiveProposals.bind(this);
   }
@@ -238,10 +242,10 @@ class Vote extends Component {
               users: users,
               isLoaded: true,
               states: [],
-            },
+            }
             // (event) => this.displayActiveProposals(event)
           );
-          setInterval(this.displayActiveProposals, 1000);
+          setInterval(this.displayActiveProposals, 5000);
         });
       // .then((event) => {
       //   this.displayActiveProposals(event);
@@ -270,13 +274,11 @@ class Vote extends Component {
         obj = this.getProposalState.bind(this, currentEntry);
         mystates[i] = await obj();
       }
-      this.setState({ states: mystates });
+      this.setState({ states: mystates, isClicked: false });
     } catch (err) {
       console.log(err);
     }
   };
-
-
 
   async getProposalState(currentEntry) {
     try {
@@ -292,13 +294,13 @@ class Vote extends Component {
           console.log("Proposal ID:", this.props.currentEntry);
           const proposalAsUint = ethers.BigNumber.from(currentEntry);
           let propState = await smartContract.state(proposalAsUint);
-        
-        //   for (let i=0; i< this.state.users.length; i++){
-        //     if (this.props.currentEntry == this.state.users[idx].proposalId){
-        //         this.setState({ states[idx] : propState });
-        //         break;
-        //     }
-        //   }
+
+          //   for (let i=0; i< this.state.users.length; i++){
+          //     if (this.props.currentEntry == this.state.users[idx].proposalId){
+          //         this.setState({ states[idx] : propState });
+          //         break;
+          //     }
+          //   }
 
           console.log("Proposal State is", propState, "item: ", currentEntry);
 
@@ -523,7 +525,7 @@ class Vote extends Component {
         );
         const Receipt = await queueTx.wait(1);
         console.log("Queueing Receipt ", Receipt);
-
+        this.setState({ isQueued: true, isClicked: true });
       } catch (error) {
         if (error.code === 4001) {
           // EIP-1193 userRejectedRequest error
@@ -534,21 +536,19 @@ class Vote extends Component {
     } else {
       console.log("Ethereum object does not exist");
     }
+    this.setState({ isQueued: false, isClicked: false });
   };
 
-//   checkStates = () => {
-//     if(this.state.states[idx] === 5){}}
+  //   checkStates = () => {
+  //     if(this.state.states[idx] === 5){}}
 
-this.state.states[idx] === 
-
-
-componentDidUpdate(prevProps, prevState) {
-    console.log('Prev state', prevState); // Before update
-    console.log('New state', this.state); // After update 
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Prev state", prevState); // Before update
+    console.log("New state", this.state); // After update
   }
 
-  refreshState = (idx) => this.setState({ showHiddenPassword: !this.state.showHiddenPassword });
-
+  refreshState = (idx) =>
+    this.setState({ showHiddenPassword: !this.state.showHiddenPassword });
 
   //   copyToClipboard = (e) => {
   //     this.textArea.select();
@@ -564,7 +564,7 @@ componentDidUpdate(prevProps, prevState) {
   };
 
   render() {
-    const { showState} = this.state;
+    const { showState } = this.state;
     console.log("this.state.states ", this.state.states);
     console.log("this.state.users ", this.state.users);
     return (
@@ -691,6 +691,16 @@ componentDidUpdate(prevProps, prevState) {
                 </ListItem>
               ))}
           </List>
+          {this.state.isClicked &&
+          this.state.isQueued &&
+          this.state.snackbarCount == 0 ? (
+            <SimpleSnackbar name="queue" />
+          ) : null}
+          {this.state.isClicked &&
+          this.state.isExecuted &&
+          this.state.snackbarCount == 0 ? (
+            <SimpleSnackbar name="execute" />
+          ) : null}
         </Box>
         <Routes>
           <Route path={`/About`} component={<About />} />
