@@ -468,16 +468,13 @@ export default function ProposalSubmission(props, { callback }) {
         {!proposalID && buttonClicked && rpcError && snackbarProposalExists ? (
           <SimpleSnackbar name="proposalExists" />
         ) : null}
-        {proposalID && snackbarSuccess && (
-          <div>
-            <SimpleSnackbar
-              name="successfulPropose"
-              //   hash={proposeHash}
-              //   //   href={`https://rinkeby.etherscan.io/tx/${proposeHash}`}
-              //   //   target="_blank"
-            />
-          </div>
-        )}
+        {proposalID && buttonClicked && snackbarSuccess ? (
+          <SimpleSnackbar
+            name="successfulPropose"
+            //   hash={proposeHash}
+            //   //   href={`https://rinkeby.etherscan.io/tx/${proposeHash}`}
+          />
+        ) : null}
       </div>
       <Routes>
         <Route path={`/Vote`} component={<Vote />} />
