@@ -39,6 +39,7 @@ export default function Projects() {
   const [isDelegate, setDelegate] = useState(false);
   const [isProposed, setProposal] = useState(false);
   const [snackbarNotification, setSnackbarNotification] = useState(false);
+  const [hasDelegated, setIsDelHolder] = useState(null);
   const navigate = useNavigate();
 
   const navigateToProj = () => {
@@ -125,7 +126,7 @@ export default function Projects() {
         // var web3 = new Web3(`https://rinkeby.infura.io/v3/${INFURA_API_KEY}`);
         let blockNum = await web3.eth.getBlockNumber();
         let lastblock = blockNum - 1;
-        let nVotes = await projGovContract.getVotes(currentAccount, lastblock);
+        let nVotes = await projGovContract.getVotes(accounts[0], lastblock);
         //projNftContract.delegates(currentAccount);
         if (nVotes) {
           setActive(true);
@@ -135,6 +136,42 @@ export default function Projects() {
           console.log("Account has delegated Votes.");
         } else {
           console.log("No votes have been delegated.");
+        }
+      } else {
+        console.log("Ethereum object does not exist");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const isPersonDelegate = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        const accounts = await ethereum.request({
+          method: "eth_requestAccounts",
+        });
+
+        const nftContract = new ethers.Contract(
+          PROJECT_TOKEN,
+          projectToken.abi,
+          signer
+        );
+
+        const returnAddr = await nftContract.delegates(accounts[0]);
+        console.log("is delegate?", returnAddr);
+        if (returnAddr !== "0x0000000000000000000000000000000000000000") {
+          console.log("Account has delegated Votes.");
+          console.log(returnAddr);
+          setIsDelHolder(true);
+        } else {
+          console.log("No votes have been delegated.");
+          setIsDelHolder(false);
         }
       } else {
         console.log("Ethereum object does not exist");
@@ -187,17 +224,19 @@ export default function Projects() {
   //     return <Chip color="Inactive" color="primary" />;
   //   };
   useEffect(() => {
-    hasDelegatedVotes();
-  }, []);
+    const fetchData = async () => {
+      await checkWalletIsConnected();
+      await isPersonDelegate();
+      //   hasDelegatedVotes();
+    };
 
-  useEffect(() => {
-    checkWalletIsConnected();
+    fetchData();
   }, []);
 
   return (
     <div className="coolTxt">
       <br></br>
-      <h2>Spring DAO Infrastructure Projects</h2>
+      <h2>All Infrastructure Project DAOs </h2>
 
       {/* <h4>
         we call them{" "}
@@ -206,7 +245,8 @@ export default function Projects() {
         </b>
       </h4> */}
       <p>
-        Any child DAO has been created from a successful Spring DAO proposal.
+        Any child DAO has been created from a successful infrastructure DAO
+        proposal.
       </p>
 
       <Card>
@@ -224,13 +264,15 @@ export default function Projects() {
               <LocationOn sx={{ color: "#002884" }} /> Japineh, The Gambia
             </Typography>
             <Typography align="left" variant="body2" color="text.secondary">
-              <Button
-                visible="false"
-                onClick={isDelegateHandler}
-                variant="outlined"
-              >
-                Delegate Vote
-              </Button>
+              {!hasDelegated && (
+                <Button
+                  visible="false"
+                  onClick={isDelegateHandler}
+                  variant="outlined"
+                >
+                  Delegate Vote
+                </Button>
+              )}
               {snackbarNotification && isDelegate ? (
                 <SimpleSnackbar name="activateVotes" />
               ) : null}
@@ -252,14 +294,14 @@ export default function Projects() {
           sx={{ px: 2, py: 1, bgcolor: "background.default" }}
         >
           <Chip
-            label={isActive ? "Active" : "Inactive"}
-            color={isChecked ? "success" : "primary"}
+            label={hasDelegated ? "Delegated" : "No Delegate"}
+            color={hasDelegated ? "success" : "primary"}
           />
-          <Switch
+          {/* <Switch
             checked={isChecked}
             onChange={handleChange}
             inputProps={{ "aria-label": "controlled" }}
-          />
+          /> */}
         </Stack>
       </Card>
       {/* grey[500] */}
