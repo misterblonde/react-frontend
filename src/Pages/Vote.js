@@ -142,7 +142,7 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
               See Results
             </Button>
           </Link>
-          <SimpleSnackbar name="newBoxDeployed" newBox={this.state.newBox} />
+          {/* <SimpleSnackbar name="newBoxDeployed" newBox={this.state.newBox} /> */}
           {/* <Link
             to={{
               pathname: `https://rinkeby.etherscan.io/address/${this.state.newDAOs[idx].boxAddress}`,
@@ -317,6 +317,14 @@ class Vote extends Component {
     }
   }
 
+  showMatchingBox = (idx) => {
+    for (let i = 0; i < this.state.executionOrder.length; i++) {
+      if (this.state.executionOrder[i] == this.state.users[idx].proposalId) {
+        return <div>this.state.newDAOs[i]</div>;
+      }
+    }
+  };
+
   displayActiveProposals = async (event, value) => {
     try {
       // executes before props.users have loaded
@@ -464,7 +472,17 @@ class Vote extends Component {
         // // store box address in backend
 
         console.log("New box deployed at: ", newboxAddress);
-        this.setState({ newBox: newboxAddress });
+
+        this.setState({
+          newDAOs: [...this.state.newDAOs, newboxAddress],
+        });
+        this.setState({
+          executionOrder: [
+            ...this.state.executionOrder,
+            this.state.users[idx].proposalId,
+          ],
+        });
+        // this.setState({ newDAOs: newboxAddress });
         // const newBox = {
         //   proposalId: this.state.users.proposalId,
         //   boxAddress: newboxAddress,
@@ -751,6 +769,11 @@ class Vote extends Component {
                         Execute{" "}
                       </Button>
                     )}
+                    {this.showMatchingBox.bind(this, idx)}
+                    {/* {this.state.executionOrder.map(listitem, listidx) => (
+                        (listitem == this.state.users[idx].proposalId) && <div>this.state.newDAOs[listidx]</div> )
+                    } */}
+
                     {/* {this.moreDetails.bind(this)} */}
                     {/* <ListItemIcon>
                     {this.state.states[idx] == 4 ? (
