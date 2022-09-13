@@ -3,7 +3,7 @@ import SimpleSnackbar from "../Components/SimpleSnackbar";
 
 export default function Notify(props) {
   // default is execcute
-  if (param == "queue") {
+  if (props.type == "queue") {
     return <SimpleSnackbar name={props.type} />;
   }
 
