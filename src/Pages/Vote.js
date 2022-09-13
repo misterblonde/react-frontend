@@ -595,6 +595,7 @@ class Vote extends Component {
     console.log("this.state.users ", this.state.users);
     const { isQueued } = this.state.isQueued;
     const { isExecuted } = this.state.isExecuted;
+    const { isClicked } = this.state.isClicked;
     return (
       <div>
         <Box>
