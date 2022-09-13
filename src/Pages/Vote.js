@@ -26,6 +26,7 @@ import About from "./About";
 import Profile from "./Profile";
 import Queue from "./Queue";
 
+import Notify from "./Notify";
 import SimpleSnackbar from "../Components/SimpleSnackbar";
 // 0 Pending
 // __________
@@ -425,6 +426,8 @@ class Vote extends Component {
 
         console.log("New box deployed at: ", newboxAddress);
         notifyUser("execute", newboxAddress);
+        return Notify("execute", newboxAddress);
+
         this.getGovernorBalance();
         await this.executeGetBox(idx);
       } catch (error) {
@@ -543,6 +546,7 @@ class Vote extends Component {
         const Receipt = await queueTx.wait(1);
         console.log("Queueing Receipt ", Receipt);
         notifyUser("queue");
+        return Notify("queue", "undefined");
       } catch (error) {
         if (error.code === 4001) {
           // EIP-1193 userRejectedRequest error
