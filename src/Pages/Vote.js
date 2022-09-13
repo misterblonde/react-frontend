@@ -617,7 +617,7 @@ class Vote extends Component {
                       )}
                     </ListItemIcon>
                     <ListItemText
-                      primary={<b>ProposaL: </b>item.proposalQuestion}
+                      primary={item.proposalQuestion}
                       sx={{ display: "inline" }}
                       component="span"
                       variant="body2"
@@ -645,7 +645,6 @@ class Vote extends Component {
                               value={item.proposalId}
                             />
                           </button> */}
-
                             {this.returnString.bind(
                               this,
                               idx,
