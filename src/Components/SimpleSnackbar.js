@@ -120,7 +120,8 @@ export default function SimpleSnackbar(
     } else if (props.name == "queue") {
       setNotificationMsg("Proposal has been queued.");
     } else if (props.name == "execute") {
-      setNotificationMsg("Proposal has been executed.");
+      let inputString = `Executed. New box deployed at ${props.optionalArg}`;
+      setNotificationMsg(inputString);
     }
   };
 

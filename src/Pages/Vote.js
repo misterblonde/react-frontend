@@ -211,13 +211,13 @@ function showOutcome(status) {
   }
 }
 
-function notifyUser(param) {
+function notifyUser(param, optionalArg = "undefined") {
   if (param == "queue") {
     return <SimpleSnackbar name="queue" />;
   }
 
   if (param === "execute") {
-    return <SimpleSnackbar name="execute" />;
+    return <SimpleSnackbar name="execute" optionalArg={optionalArg} />;
   }
 }
 
@@ -408,21 +408,20 @@ class Vote extends Component {
         );
         const Receipt = await exeTx.wait(1);
         console.log("Execution Receipt ", Receipt);
-        notifyUser("execute");
         // generate helper contract object
-        // const helperContract = new ethers.Contract(
-        //     HELPER_CONTRACT,
-        //     helperContract.abi,
-        //     signer
-        //   );
+        const helperContract = new ethers.Contract(
+          HELPER_CONTRACT,
+          helperContract.abi,
+          signer
+        );
 
         // // now retrieve the new box address:
-        // let newboxaddress = helperContract.getTokenAddress(proposalAsUint);
+        let newboxAddress = helperContract.getTokenAddress(proposalAsUint);
 
         // // store box address in backend
 
-        // console.log("New box deployed at: ", newboxaddress);
-
+        console.log("New box deployed at: ", newboxAddress);
+        notifyUser("execute", newboxAddress);
         this.getGovernorBalance();
         await this.executeGetBox(idx);
       } catch (error) {
