@@ -25,6 +25,8 @@ import { Route, Routes } from "react-router";
 import About from "./About";
 import Profile from "./Profile";
 import Queue from "./Queue";
+
+import SimpleSnackbar from "../Components/SimpleSnackbar";
 // 0 Pending
 // __________
 // 1 Active
@@ -609,6 +611,7 @@ class Vote extends Component {
                             variant="body2"
                             color="text.primary"
                           >
+                            {item.budgetAmount}
                             {/* <button
                             onClick={this.copyToClipboard}
                             // () => {
