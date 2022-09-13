@@ -49,6 +49,7 @@ export default function ProposalSubmission(props, { callback }) {
   const [snackbarSuccess, setSnackbarSuccess] = useState(false);
   const [snackbarUnknownError, setSnackbarUnknownError] = useState(false);
   const [rejection, setRejection] = useState(false);
+  const [proposalSubmitted, setProposalSubmitted] = useState(false);
   const {
     value: firstName,
     bind: bindFirstName,
@@ -170,6 +171,7 @@ export default function ProposalSubmission(props, { callback }) {
         console.log("PROPOSAL ID (DEC): ", proposalId.toString()); //proposalID
         setProposalID(proposalId.toString());
         setSnackbarSuccess(true);
+        setProposalSubmitted(true);
         //   fetch("/users")
         //     .then((res) => res.json())
         //     .then((users) => this.setState({ users }));
@@ -286,6 +288,12 @@ export default function ProposalSubmission(props, { callback }) {
       console.log("Error modifying the properties.");
     }
   };
+
+  function resetSnackbarAlert() {
+    setRejection(false);
+    setRpcError(false);
+    setProposalSubmitted(false);
+  }
 
   useEffect(() => {
     console.log(values);
@@ -447,7 +455,11 @@ export default function ProposalSubmission(props, { callback }) {
         )}
         {!proposalID && buttonClicked && rpcError && (
           <div>
-            <SimpleSnackbar name="rpcError" errorType={rpcError} />
+            {/* <SimpleSnackbar name="rpcError" errorType={rpcError} /> */}
+            <SimpleSnackbar
+              name="rpcError"
+              resetSnackbarAlert={resetSnackbarAlert}
+            />
             {/* <br></br>
             <h2>Something went wrong!</h2>
             <p>
@@ -468,11 +480,10 @@ export default function ProposalSubmission(props, { callback }) {
         {!proposalID && buttonClicked && rpcError && snackbarProposalExists ? (
           <SimpleSnackbar name="proposalExists" />
         ) : null}
-        {proposalID && snackbarSuccess && (
+        {proposalSubmitted && (
           <SimpleSnackbar
             name="successfulPropose"
-            //   hash={proposeHash}
-            //   //   href={`https://rinkeby.etherscan.io/tx/${proposeHash}`}
+            resetSnackbarAlert={resetSnackbarAlert}
           />
         )}
       </div>
