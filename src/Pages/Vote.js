@@ -410,23 +410,21 @@ class Vote extends Component {
         const Receipt = await exeTx.wait(1);
         console.log("Execution Receipt ", Receipt);
         // generate helper contract object
-        const helperContract = new ethers.Contract(
-          HELPER_CONTRACT,
-          helperContract.abi,
-          signer
-        );
 
         // // now retrieve the new box address:
         const proposalAsUint = ethers.BigNumber.from(
           this.state.users[idx].proposalId
         );
-        let newboxAddress = helperContract.getTokenAddress(proposalAsUint);
+        let newboxAddress = await smartContract.getChildBoxAddress(
+          proposalAsUint
+        );
 
         // // store box address in backend
 
         console.log("New box deployed at: ", newboxAddress);
         notifyUser("execute", newboxAddress);
-        return Notify("execute", newboxAddress);
+        // return Notify("execute", newboxAddress);
+        console.log(`execute ${newboxAddress}`);
 
         this.getGovernorBalance();
         await this.executeGetBox(idx);
