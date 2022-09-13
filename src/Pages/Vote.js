@@ -523,7 +523,7 @@ class Vote extends Component {
         );
         const Receipt = await queueTx.wait(1);
         console.log("Queueing Receipt ", Receipt);
-        console.log(this.state.states[idx] === )
+
       } catch (error) {
         if (error.code === 4001) {
           // EIP-1193 userRejectedRequest error
