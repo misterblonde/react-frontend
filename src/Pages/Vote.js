@@ -28,6 +28,7 @@ import Queue from "./Queue";
 
 import Notify from "./Notify";
 import SimpleSnackbar from "../Components/SimpleSnackbar";
+import { timeStamp } from "console";
 // 0 Pending
 // __________
 // 1 Active
@@ -231,8 +232,8 @@ class Vote extends Component {
       states: [],
       selectedIndex: null,
       expand: false,
-      isQueued: null,
-      isExecuted: null,
+      isQueued: false,
+      isExecuted: false,
       isClicked: false,
       snackbarCount: 0,
     };
@@ -262,6 +263,7 @@ class Vote extends Component {
             // (event) => this.displayActiveProposals(event)
           );
           setInterval(this.displayActiveProposals, 5000);
+          setInterval(this.resetSnackbar, 10000);
         });
       // .then((event) => {
       //   this.displayActiveProposals(event);
@@ -366,6 +368,10 @@ class Vote extends Component {
       console.log(boxAddress);
       return <div>The new project DAO was deployed to: {boxAddress}</div>;
     }
+  };
+
+  resetSnackbar = async () => {
+    this.setState({ isQueued: false, isExecuted: false });
   };
 
   executeHandler = async (idx) => {
@@ -543,6 +549,7 @@ class Vote extends Component {
         );
         const Receipt = await queueTx.wait(1);
         console.log("Queueing Receipt ", Receipt);
+        this.setState({ isQueued: true, isClicked: true });
         notifyUser("queue");
         return Notify("queue", "undefined");
       } catch (error) {
@@ -555,7 +562,7 @@ class Vote extends Component {
     } else {
       console.log("Ethereum object does not exist");
     }
-    this.setState({ isQueued: false, isClicked: false });
+    // this.setState({ isQueued: false, isClicked: false });
   };
 
   //   checkStates = () => {
@@ -724,10 +731,10 @@ class Vote extends Component {
           message="order confirmed"
           autoHideDuration={2000}
         ></Snackbar> */}
-          {isExecuted ? (
+          {isExecuted && isClicked ? (
             <SimpleSnackbar name="execute" optionalArg="test" />
           ) : null}
-          {isQueued ? <SimpleSnackbar name="queue" /> : null}
+          {isQueued && isClicked ? <SimpleSnackbar name="queue" /> : null}
         </Box>
         <Routes>
           <Route path={`/About`} component={<About />} />
