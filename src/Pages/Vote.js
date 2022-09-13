@@ -659,14 +659,6 @@ class Vote extends Component {
               .map((item, idx) => (
                 <ListItem key={idx} alignItems="flex-start">
                   <ListItemButton selected={this.state.selectedIndex === idx}>
-                    <ListItemIcon>
-                      {renderDifferently(
-                        this.state.states[idx],
-                        idx,
-                        item.proposalId,
-                        item.proposalQuestion
-                      )}
-                    </ListItemIcon>
                     <ListItemText
                       primary={item.proposalQuestion}
                       sx={{ display: "inline" }}
@@ -706,6 +698,15 @@ class Vote extends Component {
                         </React.Fragment>
                       }
                     />
+                    <ListItemIcon>
+                      {renderDifferently(
+                        this.state.states[idx],
+                        idx,
+                        item.proposalId,
+                        item.proposalQuestion
+                      )}
+                    </ListItemIcon>
+
                     {this.state.states[idx] != 7 &&
                       this.state.states[idx] != 3 && (
                         <Button

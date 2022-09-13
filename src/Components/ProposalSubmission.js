@@ -455,11 +455,11 @@ export default function ProposalSubmission(props, { callback }) {
         )}
         {!proposalID && buttonClicked && rpcError && (
           <div>
-            {/* <SimpleSnackbar name="rpcError" errorType={rpcError} /> */}
-            <SimpleSnackbar
+            <SimpleSnackbar name="rpcError" errorType={rpcError} />
+            {/* <SimpleSnackbar
               name="rpcError"
               resetSnackbarAlert={resetSnackbarAlert}
-            />
+            /> */}
             {/* <br></br>
             <h2>Something went wrong!</h2>
             <p>
@@ -480,12 +480,24 @@ export default function ProposalSubmission(props, { callback }) {
         {!proposalID && buttonClicked && rpcError && snackbarProposalExists ? (
           <SimpleSnackbar name="proposalExists" />
         ) : null}
-        {proposalSubmitted && (
-          <SimpleSnackbar
-            name="successfulPropose"
-            resetSnackbarAlert={resetSnackbarAlert}
-          />
-        )}
+         /* <h2>Thank you for your proposal submission!</h2>
+<p>
+  ✅ Your vote has been successfully submitted. Your proposal ID is{" "}
+  <b>{proposalID}</b>. You can check your transaction details under:
+  <a
+    style={{ display: "table-cell" }}
+    href={`https://rinkeby.etherscan.io/tx/${proposeHash}`}
+    target="_blank"
+  >
+    https://rinkeby.etherscan.io/tx/{proposeHash}
+  </a>
+  {/* https://rinkeby.etherscan.io/tx/{voteHash} </p> */
+        // {proposalSubmitted && proposalId && (
+        //   <SimpleSnackbar
+        //     name="successfulPropose"
+        //     resetSnackbarAlert={resetSnackbarAlert}
+        //   />
+        // )}
       </div>
       <Routes>
         <Route path={`/Vote`} component={<Vote />} />
