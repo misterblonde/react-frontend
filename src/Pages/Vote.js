@@ -28,7 +28,6 @@ import Queue from "./Queue";
 
 import Notify from "./Notify";
 import SimpleSnackbar from "../Components/SimpleSnackbar";
-import { timeStamp } from "console";
 // 0 Pending
 // __________
 // 1 Active
@@ -444,6 +443,7 @@ class Vote extends Component {
     } else {
       console.log("Ethereum object does not exist");
     }
+    return <SimpleSnackbar name="execute" />;
   };
 
   cancelHandler = async (idx) => {
