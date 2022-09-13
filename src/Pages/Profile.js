@@ -35,11 +35,19 @@ import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import LocationOn from "@mui/icons-material/LocationOn";
 
+import loyalGif from "../img/loyalOwner.gif";
 const style = {
   width: "100%",
   maxWidth: 360,
   bgcolor: "background.paper",
 };
+
+function useForceUpdate() {
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue((value) => value + 1); // update state to force render
+  // An function that increment 👆🏻 the previous state like here
+  // is better than directly setting `value + 1`
+}
 
 export default function Profile() {
   const [currentAccount, setCurrentAccount] = useState(null);
@@ -55,12 +63,13 @@ export default function Profile() {
   const [myProjBaseUri, setProjBaseUri] = useState([]);
   const [baseUri, setBaseUri] = useState(null);
   const [nftDisplayal, displayNft] = useState(false);
-  const [isLoyalOwner, setLoyalOwner] = useState(false);
+  const [isLoyalOwner, setLoyalOwner] = useState(null);
   const [showIds, setShowIds] = useState(false);
-  const [projectNft, setProjectNft] = useState(tap);
+  const [projectNft, setProjectNft] = useState(null);
   const [currentLoyalty, setLoyalty] = useState(
     "You are currently not a loyal member."
   );
+  const forceUpdate = useForceUpdate();
 
   var api = require("etherscan-api").init(
     "QPTMSBIJA17A9XT2C9KH67YAGHRMWFEZFC",
@@ -273,12 +282,12 @@ export default function Profile() {
           setProjCount(Number(mycount));
           setCurrentAccount(accounts[0]);
 
-          let nftTxList = await api.account.txlist(
-            PROJECT_TOKEN,
-            1,
-            "latest",
-            "asc"
-          );
+          //   let nftTxList = await api.account.txlist(
+          //     PROJECT_TOKEN,
+          //     1,
+          //     "latest",
+          //     "asc"
+          //   );
 
           const localGov = new ethers.Contract(
             PROJECT_GOV,
@@ -286,9 +295,14 @@ export default function Profile() {
             signer
           );
 
-          let isLoyal = await localGov.isLoyal(currentAccount);
+          let isLoyal = await localGov.isLoyal(accounts[0]);
+          if (isLoyal) {
+            setProjectNft(loyalGif);
+          } else {
+            setProjectNft(tap);
+          }
           setLoyalOwner(isLoyal);
-          console.log("is he/she loyal?", isLoyal);
+          console.log("HUHUUU is he/she loyal?", isLoyal);
 
           //   setDisplayTransactions(true);
         } catch (err) {
@@ -305,19 +319,20 @@ export default function Profile() {
   const imageHandler = () => {
     if (isLoyalOwner) {
       console.log("loyal owner detected");
-      setProjectNft(runningTap);
-      setLoyalty("This owner is a loyal Project DAO member.");
+      //   setProjectNft(loyalGif);
+      setLoyalty("This owner is an active loyal Project DAO member.");
+
       return (
-        <div>
+        <div text="coolTxt">
           This owner is a <b>loyal</b> Project DAO member.
-          {/* <img src={runningTap} alt="runningTap" width="106" /> */}
         </div>
       ); // gif
     }
+    setLoyalty("This owner is a passive Project DAO member.");
     return (
       <div text="coolTxt">
         {/* You are currently not a loyal Project DAO member.  */}
-        Why don't you check out our{" "}
+        This owner is currently <b>inactive</b>. Why don't you check out our{" "}
         <Link to="/ProjectProposals1" className="Button">
           current votes?
         </Link>
@@ -342,16 +357,35 @@ export default function Profile() {
     );
   };
 
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       await checkWalletIsConnected();
+  //       await readNfts();
+  //       const data = await readProjNfts();
+  //     };
+
+  //     fetchData();
+  //   }, []);
   useEffect(() => {
-    checkWalletIsConnected();
-    readNfts();
-    readProjNfts();
+    imageHandler();
+  }, [projectNft]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await checkWalletIsConnected();
+      await readNfts();
+      const data = await readProjNfts();
+      if (isLoyalOwner) {
+        imageHandler();
+      }
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
     checkWalletIsConnected();
     readNfts();
-    readProjNfts();
   }, [currentAccount, tokenIds]);
 
   function imgLink(image) {
@@ -361,6 +395,8 @@ export default function Profile() {
   }
 
   if (!tokenIds) return null;
+
+  if (projectNft == null) return;
 
   return (
     <div className="profileTxt">
@@ -449,7 +485,7 @@ export default function Profile() {
                   VP: {projCount}
                 </Typography>
                 <Typography align="left" variant="body2" color="text.secondary">
-                  {projCount ? imageHandler() : null}
+                  {currentLoyalty}
                 </Typography>
               </Stack>
             </Box>
@@ -463,6 +499,7 @@ export default function Profile() {
         </Card>
         <Divider sx={{ borderBottomWidth: 5 }} />
         <br></br>
+        <img src={projectNft} alt="runningTap" width="106" />
       </div>
     </div>
   );

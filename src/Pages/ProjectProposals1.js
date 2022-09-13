@@ -74,12 +74,12 @@ import ProjectSimpleVote from "./ProjectSimpleVote";
 
 function renderDifferently(value, idx, proposalId, proposalQuestion) {
   if (value === 0) {
-    return <li key={idx}>Voting starts very soon.</li>;
+    return <li key={idx}> Voting starts very soon. </li>;
   }
   if (value === 1) {
     return (
       <div>
-        {/* <Link
+        <Link
           to={`../SubmitVote/${proposalId}`}
           state={{ proposalQuestion: proposalQuestion }}
           style={{ textDecoration: "none" }}
@@ -90,10 +90,9 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
             variant="outlined"
             className="hiddenlinkbutton"
           >
-            Vote <br></br>
-            (1 Token = 1 Vote)
+            Vote (1 Token = 1 VP)
           </Button>
-        </Link> */}
+        </Link>
         <Link
           to={`../ProjectQuadraticVote/${proposalId}`}
           state={{ proposalQuestion: proposalQuestion }}
@@ -105,7 +104,7 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
             variant="outlined"
             className="hiddenlinkbutton"
           >
-            Vote <br></br>(Quadratic Voting)
+            QC Vote (1 Token = 1 VP)
           </Button>
         </Link>
         <Link
@@ -119,34 +118,72 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
             variant="outlined"
             className="hiddenlinkbutton"
           >
-            Vote <br></br>(1 address = 1 Vote)
+            Vote (1 address = 1 VP)
           </Button>
         </Link>
       </div>
     );
   }
-  return (
-    <div>
-      <Link
-        to={`../ProjectResults/${proposalId}`}
-        state={{ proposalQuestion: proposalQuestion }}
-        style={{ textDecoration: "none" }}
-        // to={{
-        //   pathname: `../SubmitVote/${proposalId}`,
-        //   state: { proposalQuestion: ${proposalQuestion} ,
-        // }}
-      >
-        <Button
-          sx={{ mt: 1, mr: 1 }}
-          type="results"
-          className="hiddenlinkbutton"
-          variant="outlined"
+  if (value > 2) {
+    if (value == 7) {
+      return (
+        <div>
+          <Link
+            to={`../Results/${proposalId}`}
+            state={{ proposalQuestion: proposalQuestion }}
+            style={{ textDecoration: "none" }}
+          >
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="results"
+              className="hiddenlinkbutton"
+              variant="outlined"
+            >
+              See Results
+            </Button>
+          </Link>
+          {/* <SimpleSnackbar name="newBoxDeployed" newBox={this.state.newBox} /> */}
+          {/* <Link
+            to={{
+              pathname: `https://rinkeby.etherscan.io/address/${this.state.newDAOs[idx].boxAddress}`,
+            }}
+          >
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="results"
+              className="hiddenlinkbutton"
+              variant="outlined"
+            >
+              Funds Deposited
+            </Button>
+          </Link> */}
+        </div>
+      );
+    }
+    return (
+      <div>
+        <Link
+          to={`../Results/${proposalId}`}
+          state={{ proposalQuestion: proposalQuestion }}
+          style={{ textDecoration: "none" }}
+          // to={{
+          //   pathname: `../SubmitVote/${proposalId}`,
+          //   state: { proposalQuestion: ${proposalQuestion} ,
+          // }}
         >
-          See Results
-        </Button>
-      </Link>
-    </div>
-  );
+          <Button
+            sx={{ mt: 1, mr: 1 }}
+            type="results"
+            className="hiddenlinkbutton"
+            variant="outlined"
+          >
+            See Results
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+  return <div></div>;
 }
 
 function showOutcome(status) {
@@ -219,8 +256,12 @@ class ProjectProposals1 extends Component {
       selectedIndex: null,
       expand: false,
     };
+    this.displayActiveProposals = this.displayActiveProposals.bind(this);
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
   componentDidMount() {
     try {
       fetch(`${BACKEND}/project`, {
@@ -232,14 +273,12 @@ class ProjectProposals1 extends Component {
         .then((res) => res.json())
         .then((users) => {
           console.log("Users inside promise", users);
-          let event = this.setState(
-            {
-              users: users,
-              isLoaded: true,
-              states: [],
-            },
-            this.displayActiveProposals
-          );
+          let event = this.setState({
+            users: users,
+            isLoaded: true,
+            states: [],
+          });
+          setInterval(this.displayActiveProposals, 5000);
           //   this.setState({ users: users, isLoaded: true, states: [] });
         });
       // .then((event) => {
@@ -565,6 +604,7 @@ class ProjectProposals1 extends Component {
                             variant="body2"
                             color="text.primary"
                           >
+                            <b>Budget: </b> {item.budget}
                             {/* <button
                             onClick={this.copyToClipboard}
                             // () => {
