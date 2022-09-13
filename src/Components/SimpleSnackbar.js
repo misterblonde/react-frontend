@@ -78,6 +78,8 @@ export default function SimpleSnackbar(
       setNotificationMsg(
         "Vote(s) successfully delegated, you can take part in the DAO now."
       );
+    } else if (props.name == "newBoxDeployed") {
+      setNotificationMsg(`Successfully deployed contract at ${props.newBox}`);
     } else if (props.name == "pleaseWait") {
       setNotificationMsg("Please Wait.");
     } else if (props.name == "rpcError") {

@@ -142,7 +142,8 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
               See Results
             </Button>
           </Link>
-          <Link
+          <SimpleSnackbar name="newBoxDeployed" newBox={this.state.newBox} />
+          {/* <Link
             to={{
               pathname: `https://rinkeby.etherscan.io/address/${this.state.newDAOs[idx].boxAddress}`,
             }}
@@ -155,7 +156,7 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
             >
               Funds Deposited
             </Button>
-          </Link>
+          </Link> */}
         </div>
       );
     }
@@ -268,7 +269,9 @@ class Vote extends Component {
       isExecuted: false,
       isClicked: false,
       snackbarCount: 0,
-      newDAOs: {},
+      newDAOs: [],
+      executionOrder: [],
+      newBox: null,
     };
     this.displayActiveProposals = this.displayActiveProposals.bind(this);
   }
@@ -461,27 +464,21 @@ class Vote extends Component {
         // // store box address in backend
 
         console.log("New box deployed at: ", newboxAddress);
+        this.setState({ newBox: newboxAddress });
+        // const newBox = {
+        //   proposalId: this.state.users.proposalId,
+        //   boxAddress: newboxAddress,
+        // };
 
-        // const newEntry = { proposalNo: idx, boxAddress: newboxAddress };
-        // const newEntry[idx] = dict[1] = "one";
-        const newEntry = { idx: newboxAddress };
-        // before instead of newEntry: idx: newboxAddress
-        const newBar = { ...this.state.newDAOs, newEntry };
+        // let copyFoo = { ...this.state.newDAOs }; //create a new copy
+        // copyFoo.bar = { boxAddress: newboxAddress }; //change the value of bar
+        // this.setState({ foo: copyFoo }); //write it back to state
 
-        // Create new "foo" object, cloning existing foo into new foo
-        // and updating bar key with new bar object
-        // const newFoo = { ...this.state.foo, newDAOs: newBar };
-
-        // Calling setState() correctly updates state and triggers
-        // re-render. Here we replace the existing foo with the newly
-        // created foo object
-        this.setState({ newDAOs: newBar });
-
-        console.log("box addressed stored in state: ", newDAOs[idx]);
+        // console.log("box addressed stored in state: ", newDAOs[idx]);
         //this.setState(prevState => ({expenses: [...prevState.expenses, newExpense]}))
 
         // this.setState(newDAOs);
-        notifyUser("execute", newboxAddress);
+        // notifyUser("execute", newboxAddress);
         // return Notify("execute", newboxAddress);
         console.log(`execute ${newboxAddress}`);
 
@@ -497,7 +494,6 @@ class Vote extends Component {
     } else {
       console.log("Ethereum object does not exist");
     }
-    return <SimpleSnackbar name="execute" />;
   };
 
   cancelHandler = async (idx) => {
