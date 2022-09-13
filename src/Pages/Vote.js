@@ -416,6 +416,9 @@ class Vote extends Component {
         );
 
         // // now retrieve the new box address:
+        const proposalAsUint = ethers.BigNumber.from(
+          this.state.users[idx].proposalId
+        );
         let newboxAddress = helperContract.getTokenAddress(proposalAsUint);
 
         // // store box address in backend
