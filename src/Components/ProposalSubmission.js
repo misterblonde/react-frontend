@@ -247,6 +247,7 @@ export default function ProposalSubmission(props, { callback }) {
         } else if (error.code === 4001) {
           // EIP-1193 userRejectedRequest error
           setRejection(true);
+
           console.log("Permissions needed to continue.");
         } else {
           setSnackbarUnknownError(true);
@@ -471,9 +472,9 @@ export default function ProposalSubmission(props, { callback }) {
           <div>
             <SimpleSnackbar
               name="successfulPropose"
-              hash={proposeHash}
-              //   href={`https://rinkeby.etherscan.io/tx/${proposeHash}`}
-              //   target="_blank"
+              //   hash={proposeHash}
+              //   //   href={`https://rinkeby.etherscan.io/tx/${proposeHash}`}
+              //   //   target="_blank"
             />
           </div>
         )}

@@ -314,19 +314,16 @@ export default function Profile() {
         </div>
       ); // gif
     }
-    console.log("loyal owner detected");
-
-    if (!isLoyalOwner)
-      return (
-        <div text="coolTxt">
-          {/* You are currently not a loyal Project DAO member.  */}
-          Why don't you check out our{" "}
-          <Link to="/ProjectProposals1" className="Button">
-            current votes?
-          </Link>
-          {/* <img src={tap} alt="staticTap" width="106" /> */}
-        </div>
-      ); // default image
+    return (
+      <div text="coolTxt">
+        {/* You are currently not a loyal Project DAO member.  */}
+        Why don't you check out our{" "}
+        <Link to="/ProjectProposals1" className="Button">
+          current votes?
+        </Link>
+        {/* <img src={tap} alt="staticTap" width="106" /> */}
+      </div>
+    ); // default image
   };
 
   const showTokenIds = () => {

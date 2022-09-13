@@ -366,10 +366,10 @@ function Home() {
             Mint Genesis NFT
           </Button>
           {/* ! not showing up after rejected transaction */}
-          {snackbar && waitForMint ? (
+          {/* {snackbar && waitForMint ? (
             <SimpleSnackbar name="mintingWait" />
           ) : null}
-          {snackbar && minted ? <SimpleSnackbar name="successfulMint" /> : null}
+          {snackbar && minted ? <SimpleSnackbar name="successfulMint" /> : null} */}
         </FormControl>
       </div>
     );
@@ -457,6 +457,11 @@ function Home() {
             <SimpleSnackbar name="userDeniedTx" />
           ) : null}
           {/* {snackbar && isDisabled ? <SimpleSnackbar name="pleaseWait" /> : null} */}
+          {/* put minting snackbars here.  */}
+          {snackbar && waitForMint ? (
+            <SimpleSnackbar name="mintingWait" />
+          ) : null}
+          {snackbar && minted ? <SimpleSnackbar name="successfulMint" /> : null}
         </div>
         <br></br>
         <div>

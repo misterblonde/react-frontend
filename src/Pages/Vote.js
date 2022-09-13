@@ -545,7 +545,10 @@ class Vote extends Component {
         <Box>
           <br></br>
           <br></br>
-          <h1 className="proposalHeadline"> All Spring DAO Proposals </h1>
+          <h1 className="proposalHeadline">
+            {" "}
+            All Infrastructure DAO Proposals{" "}
+          </h1>
           <Divider />
           <Button onClick={this.refreshPage} variant="outlined">
             Refresh
