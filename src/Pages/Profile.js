@@ -343,18 +343,22 @@ export default function Profile() {
 
   const showTokenIds = () => {
     readNfts();
-    setShowIds(true);
-    if (!myIds) return <div>You don't seem to have any NFTs yet.</div>;
-    return (
-      <ul className="nobull">
-        {myIds.map((item, idx) => (
-          <li key={idx}>
-            <img src={droplet} alt={idx} key="genesisNft" width="26" />
-            <b>{item}</b>
-          </li>
-        ))}
-      </ul>
-    );
+    if (myIds.length == 0) {
+      setShowIds(false);
+    } else {
+      setShowIds(true);
+    }
+    //   return <div>You don't seem to have any NFTs yet.</div>;
+    // return (
+    //   <ul className="nobull">
+    //     {myIds.map((item, idx) => (
+    //       <li key={idx}>
+    //         <img src={droplet} alt={idx} key="genesisNft" width="26" />
+    //         <b>{item}</b>
+    //       </li>
+    //     ))}
+    //   </ul>
+    // );
   };
 
   //   useEffect(() => {
@@ -399,12 +403,22 @@ export default function Profile() {
   if (projectNft == null) return;
 
   return (
-    <div className="profileTxt">
+    <div className="s-code-block">
       <br></br>
       <h1>Your Infrastructure DAO NFT Portfolio</h1>
       <br></br>
       <br></br>
-      <Typography fontWeight={900}>Account: {currentAccount} </Typography>
+      <div className="s-code-block">
+        <Typography fontWeight={900}>
+          Account: {currentAccount} <></>
+          <Button
+            variant="outlined"
+            onClick={() => navigator.clipboard.writeText(currentAccount)}
+          >
+            Copy
+          </Button>
+        </Typography>
+      </div>
       <br></br>
       <div>
         {/* <div>{currentAccount ? displayNfts() : readNfts()}</div> */}
@@ -447,6 +461,11 @@ export default function Profile() {
                       </li>
                     ))}
                   </ul>
+                )}
+                {!showIds && (
+                  <div>
+                    You currently don't own any Infrastructure DAO NFTs.
+                  </div>
                 )}
               </Typography>
             </Stack>

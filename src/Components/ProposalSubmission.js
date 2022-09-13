@@ -233,11 +233,11 @@ export default function ProposalSubmission(props, { callback }) {
           `Proposal submitted, see transaction: https://rinkeby.etherscan.io/tx/${proposeTxn.hash}`
         );
         await delay(10000);
-        props.callback();
+        // props.callback();
       } catch (error) {
         setRpcError(error.message);
         console.log(error.reason);
-        props.callback();
+        // props.callback();
         if (
           error.reason ==
           "execution reverted: Governor: proposer votes below proposal threshold"

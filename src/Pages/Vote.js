@@ -142,6 +142,8 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
               See Results
             </Button>
           </Link>
+          {this.showMatchingBox.bind(this, idx)}
+
           {/* <SimpleSnackbar name="newBoxDeployed" newBox={this.state.newBox} /> */}
           {/* <Link
             to={{
@@ -320,10 +322,15 @@ class Vote extends Component {
   showMatchingBox = (idx) => {
     for (let i = 0; i < this.state.executionOrder.length; i++) {
       if (this.state.executionOrder[i] == this.state.users[idx].proposalId) {
-        return <div>this.state.newDAOs[i]</div>;
+        console.log("Matching box address found for proposal. ");
+        return <div>Box deployed to {this.state.newDAOs[i]}</div>;
       }
     }
   };
+
+  //   showBoxAddress = (boxAddress) => {
+  //     return <div>boxAddress</div>;
+  //   };
 
   displayActiveProposals = async (event, value) => {
     try {
@@ -698,7 +705,7 @@ class Vote extends Component {
                             variant="body2"
                             color="text.primary"
                           >
-                            <b>Budget: </b> {item.budget}
+                            <b>Budget (Gwei): </b> {item.budget}
                             {/* <button
                             onClick={this.copyToClipboard}
                             // () => {
@@ -769,7 +776,8 @@ class Vote extends Component {
                         Execute{" "}
                       </Button>
                     )}
-                    {this.showMatchingBox.bind(this, idx)}
+                    {this.state.states[idx] === 7 &&
+                      this.showMatchingBox.bind(this, idx)}
                     {/* {this.state.executionOrder.map(listitem, listidx) => (
                         (listitem == this.state.users[idx].proposalId) && <div>this.state.newDAOs[listidx]</div> )
                     } */}

@@ -162,34 +162,34 @@ export default function MyMap() {
   };
 
   // gets called after component is re-rendered
-  useEffect(() => {
-    const getBalanceProj = async () => {
-      let balance;
-      const { ethereum } = window;
+  //   useEffect(() => {
+  //     const getBalanceProj = async () => {
+  //       let balance;
+  //       const { ethereum } = window;
 
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
+  //       if (ethereum) {
+  //         const provider = new ethers.providers.Web3Provider(ethereum);
+  //         const signer = provider.getSigner();
 
-        const projNftContract = new ethers.Contract(
-          PROJECT_TOKEN,
-          MyProjectToken.abi,
-          signer
-        );
+  //         const projNftContract = new ethers.Contract(
+  //           PROJECT_TOKEN,
+  //           MyProjectToken.abi,
+  //           signer
+  //         );
 
-        if (!currentAccount) {
-          checkWalletIsConnected();
-        }
-        balance = await projNftContract.balanceOf(currentAccount);
-        console.log("Balance is: ", balance);
-        setBalance(balance);
-      }
-      return parseInt(balance);
-    };
+  //         if (!currentAccount) {
+  //           checkWalletIsConnected();
+  //         }
+  //         balance = await projNftContract.balanceOf(currentAccount);
+  //         console.log("Balance is: ", balance);
+  //         setBalance(balance);
+  //       }
+  //       return parseInt(balance);
+  //     };
 
-    // callback to parent that set props
-    getBalanceProj().catch(console.error);
-  }, []);
+  //     // callback to parent that set props
+  //     getBalanceProj().catch(console.error);
+  //   }, []);
 
   useEffect(() => {
     console.log("rerender");
@@ -332,6 +332,56 @@ export default function MyMap() {
     );
   };
 
+  //   const boxContent = (number) => {
+  //     return (
+  //       // ether show description or project question here, or proj ID?
+  //       <div>
+  //         <div className="infoTxt">
+  //           {/* <Link to={"Projects"} style={{ textDecoration: "none" }}> */}
+  //           {/* <b>Project No. 1</b> */}
+  //           <Button visible="false" onClick={navigateToProj}>
+  //             Funds allocated to New Project DAO No. 2
+  //           </Button>
+  //           {/* </Link> */}
+  //         </div>
+  //         Water fountain on queens lawn
+  //         {/* {number} */}
+  //         {/* {item.projectQuestion} */}
+  //         <br />
+  //         {/* Link to the Proposals Page of this SubDAO now.  */}
+  //         {
+  //           <Button
+  //             onClick={(e) => {
+  //               mintHandler();
+  //               // animation ? setAnimation(null) : setAnimation("BOUNCE");
+  //             }}
+  //           >
+  //             Mint Project NFT
+  //           </Button>
+  //         }
+  //         {/* {isBalance ? (
+  //           <Button
+  //             onClick={(e) => {
+  //               voteHandler();
+  //               // animation ? setAnimation(null) : setAnimation("BOUNCE");
+  //             }}
+  //           >
+  //             Vote on Proposals
+  //           </Button>
+  //         ) : (
+  //           <Button
+  //             onClick={(e) => {
+  //               mintHandler();
+  //               // animation ? setAnimation(null) : setAnimation("BOUNCE");
+  //             }}
+  //           >
+  //             Mint Project NFT
+  //           </Button>
+  //         )} */}
+  //       </div>
+  //     );
+  //   };
+
   const projContent2 = (number) => {
     return (
       // ether show description or project question here, or proj ID?
@@ -392,7 +442,9 @@ export default function MyMap() {
             position={imperial}
             icon={redTapIcon}
             animate={animation}
-          ></Marker>
+          >
+            {/* <InfoWindow content={boxContent()}></InfoWindow> */}
+          </Marker>
           {/* <Marker
             id="2"
             position={center2}

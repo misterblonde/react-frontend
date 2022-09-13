@@ -604,7 +604,7 @@ class ProjectProposals1 extends Component {
                             variant="body2"
                             color="text.primary"
                           >
-                            <b>Budget: </b> {item.budget}
+                            <b>Budget (Gwei): </b> {item.budget}
                             {/* <button
                             onClick={this.copyToClipboard}
                             // () => {
