@@ -586,6 +586,8 @@ class Vote extends Component {
     const { showState } = this.state;
     console.log("this.state.states ", this.state.states);
     console.log("this.state.users ", this.state.users);
+    const { isQueued } = this.state.isQueued;
+    const { isExecuted } = this.state.isExecuted;
     return (
       <div>
         <Box>
@@ -710,11 +712,22 @@ class Vote extends Component {
                 </ListItem>
               ))}
           </List>
-          {/* {this.state.isClicked &&
-          this.state.isExecuted &&
-          this.state.snackbarCount == 0 ? (
-            <SimpleSnackbar name="execute" />
-          ) : null} */}
+          {/* return this.state.orders ? (
+      <div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          open={open}
+          onClose={this.handleClose}
+          message="order confirmed"
+          autoHideDuration={2000}
+        ></Snackbar> */}
+          {isExecuted ? (
+            <SimpleSnackbar name="execute" optionalArg="test" />
+          ) : null}
+          {isQueued ? <SimpleSnackbar name="queue" /> : null}
         </Box>
         <Routes>
           <Route path={`/About`} component={<About />} />
