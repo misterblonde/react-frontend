@@ -90,8 +90,7 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
             variant="outlined"
             className="hiddenlinkbutton"
           >
-            Vote <br></br>
-            (1 Token = 1 Vote)
+            Vote (1 Token = 1 VP)
           </Button>
         </Link>
         <Link
@@ -105,7 +104,7 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
             variant="outlined"
             className="hiddenlinkbutton"
           >
-            Vote <br></br>(1 Token = 1 Vote, quadratic cost)
+            QC Vote (1 Token = 1 VP)
           </Button>
         </Link>
         <Link
@@ -119,7 +118,7 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
             variant="outlined"
             className="hiddenlinkbutton"
           >
-            Vote <br></br>(1 address = 1 Vote)
+            Vote (1 address = 1 VP)
           </Button>
         </Link>
       </div>
@@ -145,11 +144,17 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
           </Link>
           <Link
             to={{
-              pathname: `https://rinkeby.etherscan.io/address/${this.state.newDAOs.idx}`,
+              pathname: `https://rinkeby.etherscan.io/address/${this.state.newDAOs[idx].boxAddress}`,
             }}
-            target="_blank"
           >
-            💰{" "}
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="results"
+              className="hiddenlinkbutton"
+              variant="outlined"
+            >
+              Funds Deposited
+            </Button>
           </Link>
         </div>
       );
@@ -457,7 +462,11 @@ class Vote extends Component {
 
         console.log("New box deployed at: ", newboxAddress);
 
-        const newBar = { ...this.state.newDAOs, idx: newboxAddress };
+        // const newEntry = { proposalNo: idx, boxAddress: newboxAddress };
+        // const newEntry[idx] = dict[1] = "one";
+        const newEntry = { idx: newboxAddress };
+        // before instead of newEntry: idx: newboxAddress
+        const newBar = { ...this.state.newDAOs, newEntry };
 
         // Create new "foo" object, cloning existing foo into new foo
         // and updating bar key with new bar object

@@ -91,6 +91,8 @@ export default function ProposalSubmission(props, { callback }) {
     resetLastName();
   };
 
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
   const proposeHandler = async () => {
     const { ethereum } = window;
     if (ethereum) {
@@ -169,10 +171,6 @@ export default function ProposalSubmission(props, { callback }) {
         const proposalId = proposeReceipt.events[0].args.proposalId;
         console.log("PROPOSAL ID (HEX): ", proposalId); // returns hex num of
         console.log("PROPOSAL ID (DEC): ", proposalId.toString()); //proposalID
-        setProposalID(proposalId.toString());
-        setSnackbarSuccess(true);
-        setProposalSubmitted(true);
-        //   fetch("/users")
         //     .then((res) => res.json())
         //     .then((users) => this.setState({ users }));
 
@@ -227,9 +225,14 @@ export default function ProposalSubmission(props, { callback }) {
           console.log("backend post error");
           console.error(error.response.data);
         }
+        setProposalID(proposalId.toString());
+        setSnackbarSuccess(true);
+        setProposalSubmitted(true);
+        //   fetch("/users")
         console.log(
           `Proposal submitted, see transaction: https://rinkeby.etherscan.io/tx/${proposeTxn.hash}`
         );
+        await delay(10000);
         props.callback();
       } catch (error) {
         setRpcError(error.message);
@@ -299,6 +302,8 @@ export default function ProposalSubmission(props, { callback }) {
     console.log(values);
   }, [values, rpcError, proposalID]);
 
+  console.log(proposalID);
+  console.log(buttonClicked);
   return (
     <div align="center" className="top-element-formatting">
       <br></br>
@@ -480,18 +485,7 @@ export default function ProposalSubmission(props, { callback }) {
         {!proposalID && buttonClicked && rpcError && snackbarProposalExists ? (
           <SimpleSnackbar name="proposalExists" />
         ) : null}
-        <h2>Thank you for your proposal submission!</h2>
-        <p>
-          ✅ Thank you for your proposal submission Your proposal ID is{" "}
-          <b>{proposalID}</b>. You can check your transaction details under:{" "}
-        </p>
-        <a
-          style={{ display: "table-cell" }}
-          href={`https://rinkeby.etherscan.io/tx/${proposeHash}`}
-          target="_blank"
-        >
-          https://rinkeby.etherscan.io/tx/{proposeHash}
-        </a>
+
         <Routes>
           <Route path={`/Vote`} component={<Vote />} />
           <Route path={`/Profile`} component={<Profile />} />
