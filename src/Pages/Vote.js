@@ -476,6 +476,8 @@ class Vote extends Component {
         // re-render. Here we replace the existing foo with the newly
         // created foo object
         this.setState({ newDAOs: newBar });
+
+        console.log("box addressed stored in state: ", newDAOs[idx]);
         //this.setState(prevState => ({expenses: [...prevState.expenses, newExpense]}))
 
         // this.setState(newDAOs);
