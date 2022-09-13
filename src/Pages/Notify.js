@@ -1,7 +1,7 @@
 import React from "react";
 import SimpleSnackbar from "../Components/SimpleSnackbar";
 
-export default function Notify(type, newAddress) {
+export default function Notify(props) {
   // default is execcute
   if (param == "queue") {
     return <SimpleSnackbar name={props.type} />;
