@@ -142,8 +142,6 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
               See Results
             </Button>
           </Link>
-          {this.showMatchingBox.bind(this, idx)}
-
           {/* <SimpleSnackbar name="newBoxDeployed" newBox={this.state.newBox} /> */}
           {/* <Link
             to={{
@@ -319,14 +317,15 @@ class Vote extends Component {
     }
   }
 
-  showMatchingBox = (idx) => {
-    for (let i = 0; i < this.state.executionOrder.length; i++) {
-      if (this.state.executionOrder[i] == this.state.users[idx].proposalId) {
-        console.log("Matching box address found for proposal. ");
-        return <div>Box deployed to {this.state.newDAOs[i]}</div>;
-      }
-    }
-  };
+  //   showMatchingBox = (idx) => {
+  //     for (let i = 0; i < this.state.executionOrder.length; i++) {
+  //       if (this.state.executionOrder[i] == this.state.users[idx].proposalId) {
+  //         console.log("Matching box address found for proposal. ");
+  //         this.state.newDAOs.splice(idx, 0, item);
+  //         return <div>Box deployed to {this.state.newDAOs[i]}</div>;
+  //       }
+  //     }
+  //   };
 
   //   showBoxAddress = (boxAddress) => {
   //     return <div>boxAddress</div>;
@@ -480,15 +479,16 @@ class Vote extends Component {
 
         console.log("New box deployed at: ", newboxAddress);
 
-        this.setState({
-          newDAOs: [...this.state.newDAOs, newboxAddress],
-        });
-        this.setState({
-          executionOrder: [
-            ...this.state.executionOrder,
-            this.state.users[idx].proposalId,
-          ],
-        });
+        this.state.newDAOs.splice(idx, 0, newboxAddress);
+        // this.setState({
+        //   newDAOs: [...this.state.newDAOs, newboxAddress],
+        // });
+        // this.setState({
+        //   executionOrder: [
+        //     ...this.state.executionOrder,
+        //     this.state.users[idx].proposalId,
+        //   ],
+        // });
         // this.setState({ newDAOs: newboxAddress });
         // const newBox = {
         //   proposalId: this.state.users.proposalId,
@@ -706,6 +706,12 @@ class Vote extends Component {
                             color="text.primary"
                           >
                             <b>Budget (Gwei): </b> {item.budget}
+                            {this.state.states[idx] == 7 && (
+                              <div>
+                                <b>Box Address:</b>
+                                {this.state.newDAOs[idx]}
+                              </div>
+                            )}
                             {/* <button
                             onClick={this.copyToClipboard}
                             // () => {
