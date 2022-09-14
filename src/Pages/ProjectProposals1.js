@@ -279,7 +279,7 @@ class ProjectProposals1 extends Component {
             isLoaded: true,
             states: [],
           });
-          setInterval(this.displayActiveProposals, 5000);
+          setInterval(this.displayActiveProposals, 1500);
           //   this.setState({ users: users, isLoaded: true, states: [] });
         });
       // .then((event) => {
