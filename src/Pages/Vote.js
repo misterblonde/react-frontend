@@ -786,8 +786,8 @@ class Vote extends Component {
                         Execute{" "}
                       </Button>
                     )}
-                    {this.state.states[idx] === 7 &&
-                      this.showMatchingBox.bind(this, idx)}
+                    {/* {this.state.states[idx] === 7 &&
+                      this.showMatchingBox.bind(this, idx)} */}
                     {/* {this.state.executionOrder.map(listitem, listidx) => (
                         (listitem == this.state.users[idx].proposalId) && <div>this.state.newDAOs[listidx]</div> )
                     } */}
