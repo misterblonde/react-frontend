@@ -327,19 +327,6 @@ export default function ProjectQuadraticVote() {
                 resetSnackbarAlert={resetSnackbarAlert}
               />
             }
-            <h2>Thank you!</h2>
-            <p>
-              ✅ Your vote has been succesfully submitted. Track the status of
-              your transaction here:
-              <a
-                style={{ display: "table-cell" }}
-                href={`https://rinkeby.etherscan.io/tx/${voteHash}`}
-                target="_blank"
-              >
-                https://rinkeby.etherscan.io/tx/{voteHash}
-              </a>
-              {/* https://rinkeby.etherscan.io/tx/{voteHash} */}
-            </p>
           </div>
         )}
       </div>

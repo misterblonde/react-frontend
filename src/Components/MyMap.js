@@ -9,6 +9,8 @@ import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 
+import Profile from "../Pages/Profile";
+import About from "../Pages/About";
 import Projects from "../Pages/Projects";
 import ProjectProposals1 from "../Pages/ProjectProposals1";
 
@@ -486,6 +488,8 @@ export default function MyMap() {
         </Map>
         <Routes>
           <Route path={`/Projects`} component={<Projects />} />
+          <Route path={`/About`} component={<About />} />
+          <Route path={`/Profile`} component={<Profile />} />
         </Routes>
       </div>
     </>

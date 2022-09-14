@@ -25,6 +25,7 @@ import ListItem from "@mui/material/ListItem";
 import { Route, Routes } from "react-router";
 import About from "./About";
 import Profile from "./Profile";
+import Projects from "./Projects";
 import Queue from "./Queue";
 import ProjectQuadraticVote from "./ProjectQuadraticVote";
 import ProjectSimpleVote from "./ProjectSimpleVote";
@@ -79,7 +80,7 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
   if (value === 1) {
     return (
       <div>
-        <Link
+        {/* <Link
           to={`../SubmitVote/${proposalId}`}
           state={{ proposalQuestion: proposalQuestion }}
           style={{ textDecoration: "none" }}
@@ -92,7 +93,7 @@ function renderDifferently(value, idx, proposalId, proposalQuestion) {
           >
             Vote (1 Token = 1 VP)
           </Button>
-        </Link>
+        </Link> */}
         <Link
           to={`../ProjectQuadraticVote/${proposalId}`}
           state={{ proposalQuestion: proposalQuestion }}
@@ -582,14 +583,6 @@ class ProjectProposals1 extends Component {
               .map((item, idx) => (
                 <ListItem key={idx} alignItems="flex-start">
                   <ListItemButton selected={this.state.selectedIndex === idx}>
-                    <ListItemIcon>
-                      {renderDifferently(
-                        this.state.states[idx],
-                        idx,
-                        item.proposalId,
-                        item.proposalQuestion
-                      )}
-                    </ListItemIcon>
                     <ListItemText
                       primary={item.proposalQuestion}
                       sx={{ display: "inline" }}
@@ -629,6 +622,14 @@ class ProjectProposals1 extends Component {
                         </React.Fragment>
                       }
                     />
+                    <ListItemIcon>
+                      {renderDifferently(
+                        this.state.states[idx],
+                        idx,
+                        item.proposalId,
+                        item.proposalQuestion
+                      )}
+                    </ListItemIcon>
                     {this.state.states[idx] != 7 &&
                       this.state.states[idx] != 3 && (
                         <Button
@@ -690,6 +691,7 @@ class ProjectProposals1 extends Component {
         <Routes>
           <Route path={`/About`} component={<About />} />
           <Route path={`/Profile`} component={<Profile />} />
+          <Route path={`/Projects`} component={<Projects />} />
         </Routes>
       </div>
     );
