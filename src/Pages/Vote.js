@@ -271,7 +271,7 @@ class Vote extends Component {
       snackbarCount: 0,
       newDAOs: [],
       executionOrder: [],
-      newBox: null,
+      newBox: [],
     };
     this.displayActiveProposals = this.displayActiveProposals.bind(this);
   }
@@ -335,18 +335,22 @@ class Vote extends Component {
     try {
       // executes before props.users have loaded
       let mystates = [];
+      let myboxes = [];
       let currentEntry;
       let obj;
       for (var i = this.state.users.length - 1; i >= 0; i--) {
         currentEntry = this.state.users[i].proposalId;
         obj = this.getProposalState.bind(this, currentEntry);
         mystates[i] = await obj();
+
         if (mystates[i] == 7) {
           let newBoxAddress = await this.executeGetBox.bind(this, i);
-          this.state.newDAOs.splice(i, 0, newBoxAddress);
+          myboxes[i] = await newBoxAddress();
+        } else {
+          myboxes[i] = null;
         }
       }
-      this.setState({ states: mystates, isClicked: false });
+      this.setState({ states: mystates, isClicked: false, newDAOs: myboxes });
     } catch (err) {
       console.log(err);
     }
@@ -717,6 +721,7 @@ class Vote extends Component {
                               </div>
                             )}
                             {/* <button
+                                      // }this.state.newDAOs[idx]}
                             onClick={this.copyToClipboard}
                             // () => {
                             //   navigator.clipboard.writeText(
