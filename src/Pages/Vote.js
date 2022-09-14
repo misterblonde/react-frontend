@@ -341,6 +341,10 @@ class Vote extends Component {
         currentEntry = this.state.users[i].proposalId;
         obj = this.getProposalState.bind(this, currentEntry);
         mystates[i] = await obj();
+        if (mystates[i] == 7) {
+          let newBoxAddress = await this.executeGetBox(i);
+          this.state.newDAOs.splice(i, 0, newBoxAddress);
+        }
       }
       this.setState({ states: mystates, isClicked: false });
     } catch (err) {
@@ -416,7 +420,7 @@ class Vote extends Component {
         this.state.users[idx].proposalId
       );
       console.log(boxAddress);
-      return <div>The new project DAO was deployed to: {boxAddress}</div>;
+      return boxAddress;
     }
   };
 
