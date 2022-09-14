@@ -342,7 +342,7 @@ class Vote extends Component {
         obj = this.getProposalState.bind(this, currentEntry);
         mystates[i] = await obj();
         if (mystates[i] == 7) {
-          let newBoxAddress = await this.executeGetBox(i);
+          let newBoxAddress = await this.executeGetBox.bind(this, i);
           this.state.newDAOs.splice(i, 0, newBoxAddress);
         }
       }
