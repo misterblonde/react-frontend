@@ -64,7 +64,7 @@ export default function Profile() {
   const [baseUri, setBaseUri] = useState(null);
   const [nftDisplayal, displayNft] = useState(false);
   const [isLoyalOwner, setLoyalOwner] = useState(null);
-  const [showIds, setShowIds] = useState(false);
+  const [showIds, setShowIds] = useState(null);
   const [projectNft, setProjectNft] = useState(null);
   const [currentLoyalty, setLoyalty] = useState(
     "You are currently not a loyal member."
@@ -462,7 +462,7 @@ export default function Profile() {
                     ))}
                   </ul>
                 )}
-                {!showIds && (
+                {!showIds && showIds != null && (
                   <div>
                     You currently don't own any Infrastructure DAO NFTs.
                   </div>
