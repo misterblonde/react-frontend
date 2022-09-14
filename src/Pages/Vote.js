@@ -717,7 +717,15 @@ class Vote extends Component {
                             {this.state.states[idx] == 7 && (
                               <div>
                                 <b>Box Address:</b>
-                                {this.state.newDAOs[idx]}
+                                <Link
+                                  to={{
+                                    pathname: `https://rinkeby.etherscan.io/address/${this.state.newDAOs[idx]}`,
+                                  }}
+                                  style={{ textDecoration: "none" }}
+                                  target="_blank"
+                                >
+                                  {this.state.newDAOs[idx]}
+                                </Link>
                               </div>
                             )}
                             {/* <button
