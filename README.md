@@ -3,11 +3,15 @@
 # React Frontend Website for NFT DAO
 
 This React/JS frontend website is there so the DAO member can directly interact
-with the DAO, either by: 
+with the DAO via the following actions: 
 
-- minting an NFT
-- submitting a proposal
-- voting on active proposals
+- mint an NFT
+- profile overview view over all DAO NFTs owned
+- submit a project proposal (with or without a required budget)
+- submit a project-specific decision proposal (with or without a required
+  budget)
+- overview over all active proposals to be voted on
+- vote on active proposals
 - executing,queueing, canceling proposals (if DAO admin member)
 
 
