@@ -1,6 +1,22 @@
-# Getting Started with Create React App
+# react-frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Frontend Website for NFT DAO
+
+This React/JS frontend website is there so the DAO member can directly interact
+with the DAO, either by: 
+
+- minting an NFT
+- submitting a proposal
+- voting on active proposals
+- executing,queueing, canceling proposals (if DAO admin member)
+
+
+## Rinkeby Testnet Deprecation Warning
+
+This DAO website used to be deployed via amazon amplifyapp. However, due to the
+deprecation of the Rinkeby Test Network that this DAO was deployed to, it no
+longer works and was taken down.
+
 
 ## Available Scripts
 

@@ -1,7 +1,0 @@
-website console log: 0x7f5b692b6733e2dac575dac16b6ca05f0460806ac2b469b3d1f4c070e245368f
-transaction log: 0x7f5b692b6733e2dac575dac16b6ca05f0460806ac2b469b3d1f4c070e245368f
-
-
-package.json notes:
-
-framer-motion originally "^7.2.0",
